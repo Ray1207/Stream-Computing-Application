@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<applicationSet xmlns="http://www.ibm.com/xmlns/prod/streams/application" name="application::Project1Part1Question2.appset" productVersion="3.1.0.0" xmlns:tt="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <description>application::Project1Part1Question2 application set</description>
+
+  <application applicationDirectory="../../../." applicationScope="Default" checkpointDirectory="../../../data/ckpt" dataDirectory="../../../data" name="application::Project1Part1Question2" outputDirectory="/home/streamsadmin/StreamsStudio/workspace/Project1Part1Question2/output/application.Project1Part1Question2/Standalone" version="1.0.0">
+    <libraries/>
+    <hostpools>
+      <hostpool index="0" membershipMode="shared" name="$default"/>
+    </hostpools>
+    <tupleTypes>
+      <tupleType index="0">
+        <attribute name="line" type="rstring"/>
+        <tuple>
+          <tt:attr name="line" type="rstring"/>
+        </tuple>
+      </tupleType>
+      <tupleType index="1">
+        <attribute name="lines" type="int32"/>
+        <attribute name="words" type="int32"/>
+        <attribute name="chars" type="int32"/>
+        <tuple>
+          <tt:attr name="lines" type="int32"/>
+          <tt:attr name="words" type="int32"/>
+          <tt:attr name="chars" type="int32"/>
+        </tuple>
+      </tupleType>
+      <tupleType index="2">
+        <attribute name="resultSta" type="tuple&lt;int32 lines,int32 words,int32 chars>"/>
+        <tuple>
+          <tt:attr name="resultSta">
+            <tt:tuple>
+              <tt:attr name="lines" type="int32"/>
+              <tt:attr name="words" type="int32"/>
+              <tt:attr name="chars" type="int32"/>
+            </tt:tuple>
+          </tt:attr>
+        </tuple>
+      </tupleType>
+    </tupleTypes>
+    <pes>
+      <pe class="BeJwzcUksSYw3989L9cnMS403Cc7My443NE1MTy9KTU8sSU0BCRfHAwAS_1A5B" index="0" language="C++" optimized="false" relocatable="false" restartable="false">
+        <envVars/>
+        <executable digest="sDdyXKZBSveozteBC2TG1fkbmOQ=" dynamicLoad="true">
+          <wrapper>none</wrapper>
+          <executableUri>bin/application.Project1Part1Question2-a.dpe</executableUri>
+          <arguments/>
+          <dependencies/>
+        </executable>
+        <operInstances>
+          <operInstance class="Data" definitionIndex="0" index="0" name="Data" singleThreadedOnInputs="true" singleThreadedOnOutputs="true">
+            <resources>
+              <poolLocation poolIndex="0"/>
+            </resources>
+            <runtimeConstants>
+              <runtimeConstant name="lit$0" value="&quot;shaks12.txt&quot;"/>
+            </runtimeConstants>
+            <inputPorts/>
+            <outputPorts>
+              <outputPort index="0" isMutable="true" name="Data" streamName="Data" tupleTypeIndex="0" viewable="true">
+                <intraPeConnection iportIndex="0" operInstanceIndex="1"/>
+              </outputPort>
+            </outputPorts>
+          </operInstance>
+          <operInstance class="OneLine" definitionIndex="1" index="1" name="OneLine" singleThreadedOnInputs="true" singleThreadedOnOutputs="true">
+            <resources>
+              <poolLocation poolIndex="0"/>
+            </resources>
+            <runtimeConstants>
+              <runtimeConstant name="lit$0" value="1"/>
+            </runtimeConstants>
+            <inputPorts>
+              <inputPort index="0" isMutable="false" name="Data" tupleTypeIndex="0">
+                <intraPeConnection operInstanceIndex="0" oportIndex="0"/>
+              </inputPort>
+            </inputPorts>
+            <outputPorts>
+              <outputPort index="0" isMutable="true" name="OneLine" streamName="OneLine" tupleTypeIndex="1" viewable="true">
+                <intraPeConnection iportIndex="0" operInstanceIndex="2"/>
+              </outputPort>
+            </outputPorts>
+          </operInstance>
+          <operInstance class="aggregatedLines" definitionIndex="2" index="2" name="aggregatedLines" singleThreadedOnInputs="true" singleThreadedOnOutputs="true">
+            <resources>
+              <poolLocation poolIndex="0"/>
+            </resources>
+            <runtimeConstants>
+              <runtimeConstant name="lit$0" value="100"/>
+              <runtimeConstant name="lit$1" value="{lines = 0, words = 0, chars = 0}"/>
+            </runtimeConstants>
+            <inputPorts>
+              <inputPort index="0" isMutable="false" name="OneLine" tupleTypeIndex="1">
+                <intraPeConnection operInstanceIndex="1" oportIndex="0"/>
+              </inputPort>
+            </inputPorts>
+            <outputPorts>
+              <outputPort index="0" isMutable="true" name="aggregatedLines" streamName="aggregatedLines" tupleTypeIndex="2" viewable="true">
+                <intraPeConnection iportIndex="0" operInstanceIndex="3"/>
+              </outputPort>
+            </outputPorts>
+          </operInstance>
+          <operInstance class="Sink" definitionIndex="3" index="3" name="Sink" singleThreadedOnInputs="true" singleThreadedOnOutputs="true">
+            <resources>
+              <poolLocation poolIndex="0"/>
+            </resources>
+            <runtimeConstants>
+              <runtimeConstant name="lit$0" value="&quot; character(s).&quot;"/>
+              <runtimeConstant name="lit$1" value="&quot; word(s), &quot;"/>
+              <runtimeConstant name="lit$2" value="&quot; line(s), &quot;"/>
+            </runtimeConstants>
+            <inputPorts>
+              <inputPort index="0" isMutable="false" name="aggregatedLines" tupleTypeIndex="2">
+                <intraPeConnection operInstanceIndex="2" oportIndex="0"/>
+              </inputPort>
+            </inputPorts>
+            <outputPorts/>
+          </operInstance>
+        </operInstances>
+        <tracing level="error"/>
+        <inputPorts/>
+        <outputPorts/>
+      </pe>
+    </pes>
+    <operDefinitions>
+      <operDefinition index="0" kind="spl.adapter::FileSource">
+        <customMetricIndicies>
+          <customMetricIndex>0</customMetricIndex>
+          <customMetricIndex>1</customMetricIndex>
+        </customMetricIndicies>
+      </operDefinition>
+      <operDefinition index="1" kind="spl.relational::Functor"/>
+      <operDefinition index="2" kind="spl.relational::Aggregate">
+        <customMetricIndicies>
+          <customMetricIndex>2</customMetricIndex>
+        </customMetricIndicies>
+      </operDefinition>
+      <operDefinition index="3" kind="spl.utility::Custom"/>
+    </operDefinitions>
+    <composites>
+      <sourceUris>
+        <uri index="0" path="file:///home/streamsadmin/StreamsStudio/workspace/Project1Part1Question2/application/Project1Part1Question2.spl"/>
+      </sourceUris>
+      <compositeOpers>
+        <compositeOper endLine="49" index="0" kind="application::Project1Part1Question2" numberOfInputPorts="0" numberOfOutputPorts="0" sourceIndex="0" startLine="3" toolkitIndex="0">
+          <description>application::Project1Part1Question2 Composite</description>
+        </compositeOper>
+      </compositeOpers>
+      <compositeOperInstances>
+        <compositeOperInstance compositeOperIndex="0" endLine="49" index="4" name="application::Project1Part1Question2" sourceIndex="0" startLine="3">
+          <primitiveOperInstance endLine="15" index="0" kind="spl.adapter::FileSource" name="Data" sourceIndex="0" startLine="6" toolkitIndex="1">
+            <outputPorts>
+              <port index="0">
+                <connections>
+                  <connection operIndex="1" operName="OneLine" portIndex="0" portKind="input"/>
+                </connections>
+              </port>
+            </outputPorts>
+          </primitiveOperInstance>
+          <primitiveOperInstance endLine="22" index="1" kind="spl.relational::Functor" name="OneLine" sourceIndex="0" startLine="17" toolkitIndex="1">
+            <inputPorts>
+              <port index="0">
+                <connections>
+                  <connection operIndex="0" operName="Data" portIndex="0" portKind="output"/>
+                </connections>
+              </port>
+            </inputPorts>
+            <outputPorts>
+              <port index="0">
+                <connections>
+                  <connection operIndex="2" operName="aggregatedLines" portIndex="0" portKind="input"/>
+                </connections>
+              </port>
+            </outputPorts>
+          </primitiveOperInstance>
+          <primitiveOperInstance endLine="37" index="2" kind="spl.relational::Aggregate" name="aggregatedLines" sourceIndex="0" startLine="24" toolkitIndex="1">
+            <inputPorts>
+              <port index="0">
+                <connections>
+                  <connection operIndex="1" operName="OneLine" portIndex="0" portKind="output"/>
+                </connections>
+              </port>
+            </inputPorts>
+            <outputPorts>
+              <port index="0">
+                <connections>
+                  <connection operIndex="3" operName="Sink" portIndex="0" portKind="input"/>
+                </connections>
+              </port>
+            </outputPorts>
+          </primitiveOperInstance>
+          <primitiveOperInstance endLine="47" index="3" kind="spl.utility::Custom" name="Sink" sourceIndex="0" startLine="39" toolkitIndex="1">
+            <inputPorts>
+              <port index="0">
+                <connections>
+                  <connection operIndex="2" operName="aggregatedLines" portIndex="0" portKind="output"/>
+                </connections>
+              </port>
+            </inputPorts>
+          </primitiveOperInstance>
+        </compositeOperInstance>
+      </compositeOperInstances>
+    </composites>
+    <toolkits>
+      <toolkit index="0" name="Project1Part1Question2" uri="file:///home/streamsadmin/StreamsStudio/workspace/Project1Part1Question2" version="1.0.0"/>
+      <toolkit index="1" name="spl" uri="file:///opt/ibm/InfoSphereStreams/toolkits/spl" version="1.1.0"/>
+    </toolkits>
+    <customMetrics>
+      <customMetric index="0" kind="Counter" name="nFilesOpened">
+        <description>Number of files opened by the FileSource operator</description>
+      </customMetric>
+      <customMetric index="1" kind="Counter" name="nInvalidTuples">
+        <description>Number of tuples that failed to read correctly</description>
+      </customMetric>
+      <customMetric index="2" kind="Gauge" name="nCurrentPartitions">
+        <description>Number of partitions in the window</description>
+      </customMetric>
+    </customMetrics>
+  </application>
+
+</applicationSet>
