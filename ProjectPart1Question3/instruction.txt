@@ -1,1 +1,0 @@
-Just need to change fixed file name to getSubmissionTimeValue("file")
