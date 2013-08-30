@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<peModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/pe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <context>
+    <class>BeJwzcUksSYw3989L9cnMS403Cc7My443NE1MTy9KTU8sSU0BCRfHAwAS_1A5B</class>
+    <avoidRuntimeYield>Auto</avoidRuntimeYield>
+  </context>
+
+  <operators>
+    <operator>
+      <class>Data</class>
+    </operator>
+    <operator>
+      <class>OneLine</class>
+    </operator>
+    <operator>
+      <class>Sink</class>
+    </operator>
+    <operator>
+      <class>aggregatedLines</class>
+    </operator>
+  </operators>
+
+</peModel>

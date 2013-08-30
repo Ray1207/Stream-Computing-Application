@@ -1,0 +1,136 @@
+namespace application ;
+
+//LineStat: the statistics (lines and words) about a line
+type LineStat = tuple<int32 lines, int32 words, int32 chars> ;
+
+//count the words in a line
+
+/*
+ * Issue (Fixed): when executing wc command, you will find the words count is different,
+ * it is because when encounter with a line with only line breaker/or sometimes a line contains space,
+ *  it would be counted in
+ * to the total. So I added extra code to get rid of them (rather than use size, we count manually)
+ */
+int32 countWords(rstring line)
+{
+//mutable map<rstring, int32> places = {};
+	list<rstring> words = tokenize(line, " \t", false) ;
+	//mutable int32 count = size(words);
+	mutable int32 count = 0 ;
+	//if(count==1&& (words[0]=="\r"||words[0]=="\t"||words[0]==" "))
+	for(rstring word in words)
+	{
+		if(word != " " && word != "\r" && word != "\t")
+		{
+			count ++ ;
+		}
+
+	}
+
+	return count ;
+}
+
+int32 countCharacters(rstring line)
+{
+	return length(line) ;
+}
+//add two lines statistic values up and store them in X
+void accumulateValues(mutable LineStat x, LineStat y)
+{
+	x.lines += y.lines ;
+	x.words += y.words ;
+	x.chars += y.chars ;
+}
+
+boolean init(mutable float64 AggregatedSimilarityScore)
+{
+	AggregatedSimilarityScore = 0.0;
+	return false ;
+}
+
+boolean process(mutable float64 AggregatedSimilarityScore, float64 Similarity)
+{
+	AggregatedSimilarityScore = AggregatedSimilarityScore +Similarity;
+	return false ;
+}
+
+float64 result(mutable float64 AggregatedSimilarityScore)
+{
+	return AggregatedSimilarityScore/100.0 ;
+}
+
+map<rstring, int32> FrequencyList(rstring text)
+{
+// split by spaces, tabs and line breakers
+	list<rstring> words = tokenize(text, " \t\r", false) ;
+	mutable map<rstring, int32> FrequentList = { } ;
+	for(rstring word in words)
+	{
+		if(word != " " && word != "\r" && word != "\t")
+		{
+			if(word in FrequentList)
+			{
+				int32 frequency = FrequentList [ word ] ;
+				FrequentList [ word ] = frequency + 1 ;
+			}
+
+			else
+			{
+				FrequentList [ word ] = 1 ;
+			}
+
+		}
+
+	}
+
+	return FrequentList ;
+}
+
+float64 ComputeSimilarityScore(rstring text1, rstring text2)
+{
+	if((text1 == " " || text1 == "\r" || text1 == "\t")&&(text2 == " " || text2 == "\r" || text2 == "\t"))
+	{
+		return 1.0;
+	}
+	if((text1 == " " || text1 == "\r" || text1 == "\t")||(text2 == " " || text2 == "\r" || text2 == "\t"))
+	{
+		return 0.0;
+	}
+	map<rstring, int32> wordsStat1 = FrequencyList(text1);
+	map<rstring, int32> wordsStat2 = FrequencyList(text2);
+	mutable float64 quadraticSum1 = 0.0 ;
+	mutable float64 quadraticSum2 = 0.0 ;
+	mutable float64 gScore = 0.0 ;
+
+	//compute text1 quadratic sum
+	for(rstring word1 in wordsStat1)
+	{
+		float64 Frequency1 =(float64) wordsStat1[ word1 ];
+		float64 quatraticValue = pow(Frequency1, 2.0) ;
+		quadraticSum1 = quadraticSum1 + quatraticValue ;
+	}
+	//compute text2 quadratic sum
+	for(rstring word2 in wordsStat2)
+	{
+		float64 Frequency2 =(float64) wordsStat2 [ word2 ] ;
+		float64 quatraticValue = pow(Frequency2, 2.0) ;
+		quadraticSum2 = quadraticSum2 + quatraticValue ;
+	}
+	//Compute G score, find common words and multiply frequency
+	for(rstring word1 in wordsStat1)
+	{
+		if(word1 in wordsStat2) //common
+
+		{
+			float64 g = wordsStat1 [ word1 ] * wordsStat2 [ word1 ] ;
+			gScore = gScore + g ;
+		}
+
+	}
+	//Compute final similarity score
+	float64 finalSim = gScore /(pow(quadraticSum1, 0.5) * pow(quadraticSum2,
+		0.5)) ;
+	if((rstring)finalSim=="-nan") return 0.0;
+	return finalSim ;
+}
+

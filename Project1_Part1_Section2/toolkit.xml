@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<toolkitModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/toolkit" productVersion="3.1.0.0" xmlns:common="http://www.ibm.com/xmlns/prod/streams/spl/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <toolkit name="Project1_Part1_Section2" requiredProductVersion="3.0.0" version="1.0.0">
+    <description/>
+    <uriTable>
+      <uri index="2" value="application/FileCounterFunctions.spl"/>
+      <uri index="1" value="application/Project1Part1Question2.spl"/>
+    </uriTable>
+    <namespace name="application">
+      <compositeOp column="11" line="3" name="Project1_Part1_Section2" potentialMain="true" uriIndex="1">
+        <parameter defaultValue="(rstring)getSubmissionTimeValue(&quot;file&quot;)" metaType="Expression" name="fileName" optional="true" type="&lt;rstring>"/>
+      </compositeOp>
+      <function column="1" line="14" name="countWords" native="false" returnType="int32" uriIndex="2">
+        <prototype>int32 countWords(rstring line)</prototype>
+        <parameter name="line" type="rstring"/>
+      </function>
+      <function column="1" line="30" name="countCharacters" native="false" returnType="int32" uriIndex="2">
+        <prototype>int32 countCharacters(rstring line)</prototype>
+        <parameter name="line" type="rstring"/>
+      </function>
+      <function column="1" line="35" name="accumulateValues" native="false" returnType="void" uriIndex="2">
+        <prototype>void accumulateValues(mutable LineStat x, LineStat y)</prototype>
+        <parameter mutable="true" name="x" type="LineStat"/>
+        <parameter name="y" type="LineStat"/>
+      </function>
+      <function column="1" line="42" name="init" native="false" returnType="boolean" uriIndex="2">
+        <prototype>boolean init(mutable LineStat line)</prototype>
+        <parameter mutable="true" name="line" type="LineStat"/>
+      </function>
+      <function column="1" line="50" name="process" native="false" returnType="boolean" uriIndex="2">
+        <prototype>boolean process(mutable LineStat x, LineStat y)</prototype>
+        <parameter mutable="true" name="x" type="LineStat"/>
+        <parameter name="y" type="LineStat"/>
+      </function>
+      <function column="1" line="58" name="result" native="false" returnType="LineStat" uriIndex="2">
+        <prototype>LineStat result(mutable LineStat x)</prototype>
+        <parameter mutable="true" name="x" type="LineStat"/>
+      </function>
+      <type column="6" line="4" name="LineStat" static="true" type="tuple&lt;int32 lines, int32 words, int32 chars>" uriIndex="2"/>
+    </namespace>
+  </toolkit>
+
+</toolkitModel>

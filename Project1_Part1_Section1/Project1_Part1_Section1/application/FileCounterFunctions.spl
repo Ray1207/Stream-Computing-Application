@@ -1,0 +1,41 @@
+namespace application ;
+
+//LineStat: the statistics (lines and words) about a line
+type LineStat = tuple<int32 lines, int32 words, int32 chars> ;
+
+//count the words in a line
+
+/*
+ * Issue (Fixed): when executing wc command, you will find the words count is different,
+ * it is because when encounter with a line with only line breaker/or sometimes a line contains space,
+ *  it would be counted in
+ * to the total. So I added extra code to get rid of them (rather than use size, we count manually)
+ */
+int32 countWords(rstring line)
+{
+	list<rstring> words = tokenize(line, " \t", false) ;
+	//mutable int32 count = size(words);
+	mutable int32 count = 0 ;
+	//if(count==1&& (words[0]=="\r"||words[0]=="\t"||words[0]==" "))
+	for(rstring word in words)
+	{
+		if(word != " " && word != "\r" && word != "\t")
+		{
+			count ++ ;
+		}
+	}
+	return count ;
+}
+
+int32 countCharacters(rstring line)
+{
+	return length(line) ;
+}
+//add two lines statistic values up and store them in X
+void accumulateValues(mutable LineStat x, LineStat y)
+{
+	x.lines += y.lines ;
+	x.words += y.words ;
+	x.chars += y.chars ;
+}
+

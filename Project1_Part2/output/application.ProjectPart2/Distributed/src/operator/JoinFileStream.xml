@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<operatorInstanceModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/operator/instance" xmlns:tt="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <context>
+    <kind>spl.utility::Barrier</kind>
+    <class>JoinFileStream</class>
+    <operatorModelDirectory>/opt/ibm/InfoSphereStreams/toolkits/spl/spl/utility/Barrier</operatorModelDirectory>
+    <applicationDirectory>/home/streamsadmin/StreamsStudio/workspace/ProjectPart2</applicationDirectory>
+    <dataDirectory>/home/streamsadmin/StreamsStudio/workspace/ProjectPart2/data</dataDirectory>
+    <outputDirectory>/home/streamsadmin/StreamsStudio/workspace/ProjectPart2/output/application.ProjectPart2/Distributed</outputDirectory>
+    <optimized>false</optimized>
+    <verbose>false</verbose>
+    <networkByteOrdering>false</networkByteOrdering>
+    <codeBeautification>false</codeBeautification>
+    <includes>
+      <include>"../type/BeJwrMSo2LUmtKDGEUEYAMgkFDk.h"</include>
+      <include>"../type/BeJwrMSw2ycnMSwUADOECD1.h"</include>
+    </includes>
+    <stateVariables/>
+    <runtimeConstants/>
+    <sourceLocation>
+      <file>application/ProjectPart2.spl</file>
+      <line>27</line>
+      <column>5</column>
+    </sourceLocation>
+    <productVersion>3.1.0.0</productVersion>
+    <checkpointKind>none</checkpointKind>
+  </context>
+
+  <parameters/>
+
+  <inputPorts>
+    <inputPort>
+      <index>0</index>
+      <tupleCppName>iport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMSw2ycnMSwUADOECD1</tupleCppType>
+      <tupleSPLType>tuple&lt;rstring line&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>false</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>27</line>
+        <column>66</column>
+      </sourceLocation>
+      <attributes>
+        <attribute>
+          <name>line</name>
+          <cppType>SPL::rstring</cppType>
+          <splType>rstring</splType>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="line" type="rstring"/>
+      </tuple>
+    </inputPort>
+    <inputPort>
+      <index>1</index>
+      <tupleCppName>iport$1</tupleCppName>
+      <tupleCppType>SPL::BeJwrMSw2ycnMSwUADOECD1</tupleCppType>
+      <tupleSPLType>tuple&lt;rstring line&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>false</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>27</line>
+        <column>80</column>
+      </sourceLocation>
+      <attributes>
+        <attribute>
+          <name>line</name>
+          <cppType>SPL::rstring</cppType>
+          <splType>rstring</splType>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="line" type="rstring"/>
+      </tuple>
+    </inputPort>
+  </inputPorts>
+
+  <outputPorts>
+    <outputPort>
+      <index>0</index>
+      <tupleCppName>oport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMSo2LUmtKDGEUEYAMgkFDk</tupleCppType>
+      <tupleSPLType>tuple&lt;rstring text1,rstring text2&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>true</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>27</line>
+        <column>5</column>
+      </sourceLocation>
+      <attributes>
+        <attribute>
+          <name>text1</name>
+          <cppType>SPL::rstring</cppType>
+          <splType>rstring</splType>
+          <assignment>
+            <sourceLocation>
+              <file>application/ProjectPart2.spl</file>
+              <line>33</line>
+              <column>24</column>
+            </sourceLocation>
+            <values>
+              <value>
+                <cppType>SPL::rstring</cppType>
+                <splType>rstring</splType>
+                <hasRuntimeConstant>false</hasRuntimeConstant>
+                <cppExpression>iport$0.get_line()</cppExpression>
+                <splExpression>FileStream1.line</splExpression>
+                <hasFunctions>false</hasFunctions>
+                <hasSideEffects>false</hasSideEffects>
+                <hasStreamAttributes>true</hasStreamAttributes>
+                <sourceLocation>
+                  <file>application/ProjectPart2.spl</file>
+                  <line>33</line>
+                  <column>32</column>
+                </sourceLocation>
+              </value>
+            </values>
+          </assignment>
+        </attribute>
+        <attribute>
+          <name>text2</name>
+          <cppType>SPL::rstring</cppType>
+          <splType>rstring</splType>
+          <assignment>
+            <sourceLocation>
+              <file>application/ProjectPart2.spl</file>
+              <line>33</line>
+              <column>50</column>
+            </sourceLocation>
+            <values>
+              <value>
+                <cppType>SPL::rstring</cppType>
+                <splType>rstring</splType>
+                <hasRuntimeConstant>false</hasRuntimeConstant>
+                <cppExpression>iport$1.get_line()</cppExpression>
+                <splExpression>FileStream2.line</splExpression>
+                <hasFunctions>false</hasFunctions>
+                <hasSideEffects>false</hasSideEffects>
+                <hasStreamAttributes>true</hasStreamAttributes>
+                <sourceLocation>
+                  <file>application/ProjectPart2.spl</file>
+                  <line>33</line>
+                  <column>58</column>
+                </sourceLocation>
+              </value>
+            </values>
+          </assignment>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="text1" type="rstring"/>
+        <tt:attr name="text2" type="rstring"/>
+      </tuple>
+      <finalPunctuationPortScope>
+        <port>0</port>
+        <port>1</port>
+      </finalPunctuationPortScope>
+    </outputPort>
+  </outputPorts>
+
+</operatorInstanceModel>

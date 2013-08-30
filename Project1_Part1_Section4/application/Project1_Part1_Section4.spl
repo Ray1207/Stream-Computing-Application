@@ -1,0 +1,48 @@
+namespace application;
+
+composite Project1_Part1_Section4 {
+param
+    expression<int32> $windowSize : (int32)getSubmissionTimeValue("windowSize","100");
+    
+graph
+	
+	stream<rstring line> Data = TCPSource()                                            
+    {                                                                           
+      param                                                                     
+        role    : server;                                                                                                      
+        port : 23145u;
+        format : line ;                                                      
+    }
+
+		stream<LineStat> OneLine = Functor(Data)
+		{
+			output
+				OneLine : lines = 1, words = countWords(line), chars =
+					countCharacters(line) ;
+		}
+
+		stream<LineStat resultSta> aggregatedLines = Aggregate(OneLine)
+		{
+			logic
+				state :
+				{
+					mutable LineStat sum = { lines = 0, words = 0, chars = 0 } ;
+				}
+
+			window
+				OneLine : tumbling, count($windowSize) ;
+			output
+				aggregatedLines : resultSta = Custom(init(sum), process(sum, OneLine),
+					result(sum)) ;
+		}
+
+		() as Sink = Custom(aggregatedLines)
+		{
+			logic
+				onTuple aggregatedLines :
+				{
+				printStringLn((rstring) resultSta.lines + " line(s), " +(rstring) resultSta.words +
+						" word(s), " +(rstring) (resultSta.chars+resultSta.lines) + " character(s).") ;
+				} 
+		}
+}

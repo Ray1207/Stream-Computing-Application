@@ -1,0 +1,44 @@
+namespace application ;
+
+//counter functions are written in FileCounterFunctions.spl
+composite Project1_Part1_Section1
+{
+param
+    expression<rstring> $fileName : (rstring)getSubmissionTimeValue("file");
+    
+	graph
+		stream<rstring line> Data = FileSource()
+		{
+			param
+				format : line ;
+				file : $fileName ;
+		}
+
+		stream<LineStat> OneLine = Functor(Data)
+		{
+			output
+				OneLine : lines = 1, words = countWords(line), chars =
+					countCharacters(line) ;
+		}
+
+		() as Counter = Custom(OneLine)
+		{
+			
+			logic
+				state : mutable LineStat sum = { lines = 0, words = 0, chars = 0 } ;
+				onTuple OneLine : accumulateValues(sum, OneLine) ;
+				//print out result at the end of final marker
+				onPunct OneLine : if(currentPunct() == Sys.FinalMarker)
+				{
+					/*
+ 					* Issue (Fixed): when executing wc command, you will find the chars count is different,
+ 					* it is because the program does not treat a line breaker as a character. So I added extra
+ 					* codes to add them back.
+ 					*/
+					printStringLn((rstring) sum.lines + " line(s), " +(rstring) sum.words +
+						" word(s), " +(rstring) (sum.chars+sum.lines) + " character(s).") ;
+				}
+
+		}
+
+}

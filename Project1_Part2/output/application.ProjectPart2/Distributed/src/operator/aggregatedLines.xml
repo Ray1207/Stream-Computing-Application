@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<operatorInstanceModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/operator/instance" xmlns:tt="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <context>
+    <kind>spl.relational::Aggregate</kind>
+    <class>aggregatedLines</class>
+    <operatorModelDirectory>/opt/ibm/InfoSphereStreams/toolkits/spl/spl/relational/Aggregate</operatorModelDirectory>
+    <applicationDirectory>/home/streamsadmin/StreamsStudio/workspace/ProjectPart2</applicationDirectory>
+    <dataDirectory>/home/streamsadmin/StreamsStudio/workspace/ProjectPart2/data</dataDirectory>
+    <outputDirectory>/home/streamsadmin/StreamsStudio/workspace/ProjectPart2/output/application.ProjectPart2/Distributed</outputDirectory>
+    <optimized>false</optimized>
+    <verbose>false</verbose>
+    <networkByteOrdering>false</networkByteOrdering>
+    <codeBeautification>false</codeBeautification>
+    <includes>
+      <include>"../function/application/init.h"</include>
+      <include>"../function/application/process.h"</include>
+      <include>"../function/application/result.h"</include>
+      <include>"../type/BeJwrMSwxzjTNycxLLc40Lc8vSgFSyRmJRcWWRanFpTklwSWJAOxcA2C.h"</include>
+      <include>"../type/BeJwrMc40zcnMSy3ONC3PL0oBUskZiUXFAGflAjd.h"</include>
+    </includes>
+    <stateVariables>
+      <stateVariable>
+        <name>state$sum</name>
+        <cppType>SPL::BeJwrMc40zcnMSy3ONC3PL0oBUskZiUXFAGflAjd</cppType>
+        <splType>tuple&lt;int32 lines,int32 words,int32 chars&gt;</splType>
+        <value>
+          <cppType>SPL::BeJwrMc40zcnMSy3ONC3PL0oBUskZiUXFAGflAjd</cppType>
+          <splType>tuple&lt;int32 lines,int32 words,int32 chars&gt;</splType>
+          <hasRuntimeConstant>true</hasRuntimeConstant>
+          <cppExpression>lit$1</cppExpression>
+          <splExpression>{lines = 0, words = 0, chars = 0}</splExpression>
+          <hasFunctions>false</hasFunctions>
+          <hasSideEffects>false</hasSideEffects>
+          <hasStreamAttributes>false</hasStreamAttributes>
+          <sourceLocation>
+            <file>application/ProjectPart2.spl</file>
+            <line>37</line>
+            <column>29</column>
+          </sourceLocation>
+        </value>
+        <sourceLocation>
+          <file>application/ProjectPart2.spl</file>
+          <line>37</line>
+          <column>23</column>
+        </sourceLocation>
+      </stateVariable>
+    </stateVariables>
+    <runtimeConstants>
+      <runtimeConstant>
+        <name>lit$0</name>
+        <cppType>SPL::int32</cppType>
+        <splType>int32</splType>
+        <value>100</value>
+      </runtimeConstant>
+      <runtimeConstant>
+        <name>lit$1</name>
+        <cppType>SPL::BeJwrMc40zcnMSy3ONC3PL0oBUskZiUXFAGflAjd</cppType>
+        <splType>tuple&lt;int32 lines,int32 words,int32 chars&gt;</splType>
+        <value>{lines = 0, words = 0, chars = 0}</value>
+      </runtimeConstant>
+    </runtimeConstants>
+    <sourceLocation>
+      <file>application/ProjectPart2.spl</file>
+      <line>32</line>
+      <column>3</column>
+    </sourceLocation>
+    <productVersion>3.1.0.0</productVersion>
+    <types>
+      <type index="0" type="tuple&lt;int32 lines,int32 words,int32 chars>"/>
+      <type index="1" type="boolean"/>
+    </types>
+    <checkpointKind>none</checkpointKind>
+  </context>
+
+  <parameters/>
+
+  <inputPorts>
+    <inputPort>
+      <index>0</index>
+      <tupleCppName>iport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMc40zcnMSy3ONC3PL0oBUskZiUXFAGflAjd</tupleCppType>
+      <tupleSPLType>tuple&lt;int32 lines,int32 words,int32 chars&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>false</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>32</line>
+        <column>58</column>
+      </sourceLocation>
+      <window>
+        <partitioned>false</partitioned>
+        <evictionPolicy>
+          <type>count</type>
+          <size>
+            <cppType>SPL::int32</cppType>
+            <splType>int32</splType>
+            <hasRuntimeConstant>true</hasRuntimeConstant>
+            <cppExpression>lit$0</cppExpression>
+            <splExpression>100</splExpression>
+            <hasFunctions>false</hasFunctions>
+            <hasSideEffects>false</hasSideEffects>
+            <hasStreamAttributes>false</hasStreamAttributes>
+            <sourceLocation>
+              <file>application/ProjectPart2.spl</file>
+              <line>41</line>
+              <column>31</column>
+            </sourceLocation>
+          </size>
+        </evictionPolicy>
+        <sourceLocation>
+          <file>application/ProjectPart2.spl</file>
+          <line>41</line>
+          <column>5</column>
+        </sourceLocation>
+      </window>
+      <attributes>
+        <attribute>
+          <name>lines</name>
+          <cppType>SPL::int32</cppType>
+          <splType>int32</splType>
+        </attribute>
+        <attribute>
+          <name>words</name>
+          <cppType>SPL::int32</cppType>
+          <splType>int32</splType>
+        </attribute>
+        <attribute>
+          <name>chars</name>
+          <cppType>SPL::int32</cppType>
+          <splType>int32</splType>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="lines" type="int32"/>
+        <tt:attr name="words" type="int32"/>
+        <tt:attr name="chars" type="int32"/>
+      </tuple>
+    </inputPort>
+  </inputPorts>
+
+  <outputPorts>
+    <outputPort>
+      <index>0</index>
+      <tupleCppName>oport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMSwxzjTNycxLLc40Lc8vSgFSyRmJRcWWRanFpTklwSWJAOxcA2C</tupleCppType>
+      <tupleSPLType>tuple&lt;tuple&lt;int32 lines,int32 words,int32 chars&gt; resultSta&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>true</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>32</line>
+        <column>3</column>
+      </sourceLocation>
+      <attributes>
+        <attribute>
+          <name>resultSta</name>
+          <cppType>SPL::BeJwrMc40zcnMSy3ONC3PL0oBUskZiUXFAGflAjd</cppType>
+          <splType>tuple&lt;int32 lines,int32 words,int32 chars&gt;</splType>
+          <assignment>
+            <sourceLocation>
+              <file>application/ProjectPart2.spl</file>
+              <line>43</line>
+              <column>23</column>
+            </sourceLocation>
+            <outputFunction>Custom</outputFunction>
+            <values>
+              <value>
+                <cppType>SPL::boolean</cppType>
+                <splType>boolean</splType>
+                <hasRuntimeConstant>false</hasRuntimeConstant>
+                <cppExpression>::application::init(state$sum)</cppExpression>
+                <splExpression>init(sum)</splExpression>
+                <hasFunctions>true</hasFunctions>
+                <hasSideEffects>true</hasSideEffects>
+                <hasStreamAttributes>false</hasStreamAttributes>
+                <sourceLocation>
+                  <file>application/ProjectPart2.spl</file>
+                  <line>43</line>
+                  <column>42</column>
+                </sourceLocation>
+                <expressionTree>
+                  <call fcn="application::init" type="1">
+                    <args count="1">
+                      <arg type="0">
+                        <symbol id="sum" type="0"/>
+                      </arg>
+                    </args>
+                  </call>
+                </expressionTree>
+              </value>
+              <value>
+                <cppType>SPL::boolean</cppType>
+                <splType>boolean</splType>
+                <hasRuntimeConstant>false</hasRuntimeConstant>
+                <cppExpression>::application::process(state$sum, iport$0)</cppExpression>
+                <splExpression>process(sum, OneLine)</splExpression>
+                <hasFunctions>true</hasFunctions>
+                <hasSideEffects>true</hasSideEffects>
+                <hasStreamAttributes>true</hasStreamAttributes>
+                <sourceLocation>
+                  <file>application/ProjectPart2.spl</file>
+                  <line>43</line>
+                  <column>53</column>
+                </sourceLocation>
+                <expressionTree>
+                  <call fcn="application::process" type="1">
+                    <args count="2">
+                      <arg type="0">
+                        <symbol id="sum" type="0"/>
+                      </arg>
+                      <arg type="0">
+                        <stream name="OneLine" port="0" type="0"/>
+                      </arg>
+                    </args>
+                  </call>
+                </expressionTree>
+              </value>
+              <value>
+                <cppType>SPL::BeJwrMc40zcnMSy3ONC3PL0oBUskZiUXFAGflAjd</cppType>
+                <splType>tuple&lt;int32 lines,int32 words,int32 chars&gt;</splType>
+                <hasRuntimeConstant>false</hasRuntimeConstant>
+                <cppExpression>::application::result(state$sum)</cppExpression>
+                <splExpression>result(sum)</splExpression>
+                <hasFunctions>true</hasFunctions>
+                <hasSideEffects>true</hasSideEffects>
+                <hasStreamAttributes>false</hasStreamAttributes>
+                <sourceLocation>
+                  <file>application/ProjectPart2.spl</file>
+                  <line>44</line>
+                  <column>6</column>
+                </sourceLocation>
+                <expressionTree>
+                  <call fcn="application::result" type="0">
+                    <args count="1">
+                      <arg type="0">
+                        <symbol id="sum" type="0"/>
+                      </arg>
+                    </args>
+                  </call>
+                </expressionTree>
+              </value>
+            </values>
+          </assignment>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="resultSta">
+          <tt:tuple>
+            <tt:attr name="lines" type="int32"/>
+            <tt:attr name="words" type="int32"/>
+            <tt:attr name="chars" type="int32"/>
+          </tt:tuple>
+        </tt:attr>
+      </tuple>
+      <finalPunctuationPortScope>
+        <port>0</port>
+      </finalPunctuationPortScope>
+    </outputPort>
+  </outputPorts>
+
+</operatorInstanceModel>

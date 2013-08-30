@@ -1,0 +1,49 @@
+namespace application ;
+
+composite Project1_Part1_Section2
+{
+param
+    expression<rstring> $fileName : (rstring)getSubmissionTimeValue("file");
+    
+	graph
+	
+		stream<rstring line> Data = FileSource()
+		{
+			param
+				format : line ;
+				file : $fileName ;
+		}
+
+		stream<LineStat> OneLine = Functor(Data)
+		{
+			output
+				OneLine : lines = 1, words = countWords(line), chars =
+					countCharacters(line) ;
+		}
+
+		stream<LineStat resultSta> aggregatedLines = Aggregate(OneLine)
+		{
+			logic
+				state :
+				{
+					mutable LineStat sum = { lines = 0, words = 0, chars = 0 } ;
+				}
+
+			window
+				OneLine : tumbling, count(100) ;
+			output
+				aggregatedLines : resultSta = Custom(init(sum), process(sum, OneLine),
+					result(sum)) ;
+		}
+
+		() as Sink = Custom(aggregatedLines)
+		{
+			logic
+				onTuple aggregatedLines :
+				{
+				printStringLn((rstring) resultSta.lines + " line(s), " +(rstring) resultSta.words +
+						" word(s), " +(rstring) (resultSta.chars+resultSta.lines) + " character(s).") ;
+				} 
+		}
+
+}

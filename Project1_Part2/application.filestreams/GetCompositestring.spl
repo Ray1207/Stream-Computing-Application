@@ -1,0 +1,29 @@
+namespace application.filestreams;
+
+
+type textWords= tuple<rstring text>;
+
+public composite GetFileStream(output Output) {		
+	
+	graph
+
+		stream<rstring line> FileStream1 = FileSource()
+		{
+			param
+				format : line ;
+				file : "shaks12.txt" ;
+		}
+
+		// Send this tuple out now.
+		(stream <textWords> Output) = Custom(FileStream1) {
+		//logic state: mutable uint32 n=0;
+			logic
+				state: mutable textWords txt={};
+				onTuple FileStream1:
+				{
+					txt.text = line;
+					submit(txt, Output);
+				}
+					
+		} 
+} 

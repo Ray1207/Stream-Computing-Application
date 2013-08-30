@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<operatorInstanceModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/operator/instance" xmlns:tt="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <context>
+    <kind>spl.utility::Custom</kind>
+    <class>Sink</class>
+    <operatorModelDirectory>/opt/ibm/InfoSphereStreams/toolkits/spl/spl/utility/Custom</operatorModelDirectory>
+    <applicationDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2</applicationDirectory>
+    <dataDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2/data</dataDirectory>
+    <outputDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2/output/application.ProjectPart2/Standalone</outputDirectory>
+    <optimized>false</optimized>
+    <verbose>false</verbose>
+    <networkByteOrdering>false</networkByteOrdering>
+    <codeBeautification>false</codeBeautification>
+    <includes>
+      <include>"../type/BeJwrMXQzMnBMTy9KTU8sSU0JzszNzEksyiypBABwrglg.h"</include>
+    </includes>
+    <stateVariables>
+      <stateVariable>
+        <name>state$count</name>
+        <cppType>SPL::int32</cppType>
+        <splType>int32</splType>
+        <value>
+          <cppType>SPL::int32</cppType>
+          <splType>int32</splType>
+          <hasRuntimeConstant>true</hasRuntimeConstant>
+          <cppExpression>lit$2</cppExpression>
+          <splExpression>1</splExpression>
+          <hasFunctions>false</hasFunctions>
+          <hasSideEffects>false</hasSideEffects>
+          <hasStreamAttributes>false</hasStreamAttributes>
+          <sourceLocation>
+            <file>application/ProjectPart2.spl</file>
+            <line>78</line>
+            <column>35</column>
+          </sourceLocation>
+        </value>
+        <sourceLocation>
+          <file>application/ProjectPart2.spl</file>
+          <line>78</line>
+          <column>27</column>
+        </sourceLocation>
+      </stateVariable>
+    </stateVariables>
+    <runtimeConstants>
+      <runtimeConstant>
+        <name>lit$0</name>
+        <cppType>SPL::rstring</cppType>
+        <splType>rstring</splType>
+        <value>" hundred part: "</value>
+      </runtimeConstant>
+      <runtimeConstant>
+        <name>lit$1</name>
+        <cppType>SPL::rstring</cppType>
+        <splType>rstring</splType>
+        <value>"The "</value>
+      </runtimeConstant>
+      <runtimeConstant>
+        <name>lit$2</name>
+        <cppType>SPL::int32</cppType>
+        <splType>int32</splType>
+        <value>1</value>
+      </runtimeConstant>
+    </runtimeConstants>
+    <sourceLocation>
+      <file>application/ProjectPart2.spl</file>
+      <line>75</line>
+      <column>3</column>
+    </sourceLocation>
+    <productVersion>3.1.0.0</productVersion>
+    <checkpointKind>none</checkpointKind>
+  </context>
+
+  <parameters/>
+
+  <inputPorts>
+    <inputPort>
+      <index>0</index>
+      <tupleCppName>iport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMXQzMnBMTy9KTU8sSU0JzszNzEksyiypBABwrglg</tupleCppType>
+      <tupleSPLType>tuple&lt;float64 AggregatedSimilarity&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>false</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>75</line>
+        <column>23</column>
+      </sourceLocation>
+      <tupleLogic>{
+    ::SPL::Functions::Utility::printStringLn((((lit$1 + ::SPL::spl_cast&lt;SPL::rstring, SPL::int32 &gt;::cast(state$count)) + lit$0) + ::SPL::spl_cast&lt;SPL::rstring, SPL::BeJwrMXQzMnBMTy9KTU8sSU0JzszNzEksyiypBABwrglg &gt;::cast(iport$0)));
+    state$count++;
+}
+</tupleLogic>
+      <attributes>
+        <attribute>
+          <name>AggregatedSimilarity</name>
+          <cppType>SPL::float64</cppType>
+          <splType>float64</splType>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="AggregatedSimilarity" type="float64"/>
+      </tuple>
+    </inputPort>
+  </inputPorts>
+
+  <outputPorts/>
+
+</operatorInstanceModel>

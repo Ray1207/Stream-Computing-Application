@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:applicationSet xmlns="http://www.ibm.com/xmlns/prod/streams/runtime/sam" xmlns:ns2="http://www.ibm.com/xmlns/prod/streams/application" xmlns:ns3="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:ns4="http://www.ibm.com/xmlns/prod/streams/application/augmented" xmlns:ns5="http://www.ibm.com/xmlns/prod/streams/runtime/utils" xmlns:ns6="http://www.ibm.com/xmlns/prod/streams/runtime/utils/mr" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" productVersion="3.1.0.0" name="application::Project1Part1Question2.appset" xsi:noNamespaceSchemaLocation="http://www.ibm.com/xmlns/prod/streams/application">
+    <ns2:description>application::Project1Part1Question2 application set</ns2:description>
+    <ns2:application version="1.0.0" outputDirectory="/home/streamsadmin/StreamsStudio/workspace/Project1Part1Question2/output/application.Project1Part1Question2/Distributed" name="application::Project1Part1Question2" dataDirectory="../../../data" checkpointDirectory="../../../data/ckpt" applicationScope="Default" applicationDirectory="../../../.">
+        <ns2:libraries/>
+        <ns2:hostpools>
+            <ns2:hostpool name="$default" membershipMode="shared" index="0"/>
+        </ns2:hostpools>
+        <ns2:tupleTypes>
+            <ns2:tupleType index="0">
+                <ns2:attribute type="rstring" name="line"/>
+                <ns2:tuple>
+                    <ns3:attr type="rstring" name="line"/>
+                </ns2:tuple>
+            </ns2:tupleType>
+            <ns2:tupleType index="1">
+                <ns2:attribute type="int32" name="lines"/>
+                <ns2:attribute type="int32" name="words"/>
+                <ns2:attribute type="int32" name="chars"/>
+                <ns2:tuple>
+                    <ns3:attr type="int32" name="lines"/>
+                    <ns3:attr type="int32" name="words"/>
+                    <ns3:attr type="int32" name="chars"/>
+                </ns2:tuple>
+            </ns2:tupleType>
+            <ns2:tupleType index="2">
+                <ns2:attribute type="tuple&lt;int32 lines,int32 words,int32 chars&gt;" name="resultSta"/>
+                <ns2:tuple>
+                    <ns3:attr name="resultSta">
+                        <ns3:tuple>
+                            <ns3:attr type="int32" name="lines"/>
+                            <ns3:attr type="int32" name="words"/>
+                            <ns3:attr type="int32" name="chars"/>
+                        </ns3:tuple>
+                    </ns3:attr>
+                </ns2:tuple>
+            </ns2:tupleType>
+        </ns2:tupleTypes>
+        <ns2:pes>
+            <ns2:pe restartable="false" relocatable="false" optimized="false" language="C++" index="0" class="BeJwzcUksSYwHAAaTAIO">
+                <ns2:envVars/>
+                <ns2:executable dynamicLoad="true" digest="sDdyXKZBSveozteBC2TG1fkbmOQ=">
+                    <ns2:wrapper>none</ns2:wrapper>
+                    <ns2:executableUri>bin/application.Project1Part1Question2-a.dpe</ns2:executableUri>
+                    <ns2:arguments></ns2:arguments>
+                    <ns2:dependencies/>
+                </ns2:executable>
+                <ns2:operInstances>
+                    <ns2:operInstance singleThreadedOnOutputs="true" singleThreadedOnInputs="true" name="Data" index="0" definitionIndex="0" class="Data">
+                        <ns2:resources>
+                            <ns2:poolLocation poolIndex="0"/>
+                        </ns2:resources>
+                        <ns2:runtimeConstants>
+                            <ns2:runtimeConstant value="&quot;shaks12.txt&quot;" name="lit$0"/>
+                        </ns2:runtimeConstants>
+                        <ns2:inputPorts/>
+                        <ns2:outputPorts>
+                            <ns2:outputPort viewable="true" streamName="Data" tupleTypeIndex="0" name="Data" isMutable="true" index="0">
+<ns2:interPeConnection operInstanceIndex="1" iportIndex="0"/>
+                            </ns2:outputPort>
+                        </ns2:outputPorts>
+                    </ns2:operInstance>
+                </ns2:operInstances>
+                <ns2:tracing level="error"/>
+                <ns2:inputPorts/>
+                <ns2:outputPorts>
+                    <ns2:outputPort tupleTypeIndex="0" transport="TCP" singleThreadedOnOutput="true" index="0" encoding="LE">
+                        <ns2:staticConnections>
+                            <ns2:staticConnection peIndex="1" iportIndex="0"/>
+                        </ns2:staticConnections>
+                        <ns2:operInstanceConnection oportIndex="0" operInstanceIndex="0"/>
+                    </ns2:outputPort>
+                </ns2:outputPorts>
+            </ns2:pe>
+            <ns2:pe restartable="false" relocatable="false" optimized="false" language="C++" index="1" class="BeJwz989L9cnMS40HAA9jANB">
+                <ns2:envVars/>
+                <ns2:executable dynamicLoad="true" digest="RqWISmamwePHoMO7AYNJlUsbOqY=">
+                    <ns2:wrapper>none</ns2:wrapper>
+                    <ns2:executableUri>bin/application.Project1Part1Question2-b.dpe</ns2:executableUri>
+                    <ns2:arguments></ns2:arguments>
+                    <ns2:dependencies/>
+                </ns2:executable>
+                <ns2:operInstances>
+                    <ns2:operInstance singleThreadedOnOutputs="true" singleThreadedOnInputs="true" name="OneLine" index="1" definitionIndex="1" class="OneLine">
+                        <ns2:resources>
+                            <ns2:poolLocation poolIndex="0"/>
+                        </ns2:resources>
+                        <ns2:runtimeConstants>
+                            <ns2:runtimeConstant value="1" name="lit$0"/>
+                        </ns2:runtimeConstants>
+                        <ns2:inputPorts>
+                            <ns2:inputPort tupleTypeIndex="0" name="Data" isMutable="false" index="0">
+<ns2:interPeConnection oportIndex="0" operInstanceIndex="0"/>
+                            </ns2:inputPort>
+                        </ns2:inputPorts>
+                        <ns2:outputPorts>
+                            <ns2:outputPort viewable="true" streamName="OneLine" tupleTypeIndex="1" name="OneLine" isMutable="true" index="0">
+<ns2:interPeConnection operInstanceIndex="2" iportIndex="0"/>
+                            </ns2:outputPort>
+                        </ns2:outputPorts>
+                    </ns2:operInstance>
+                </ns2:operInstances>
+                <ns2:tracing level="error"/>
+                <ns2:inputPorts>
+                    <ns2:inputPort tupleTypeIndex="0" transport="TCP" index="0" encoding="LE">
+                        <ns2:staticConnections>
+                            <ns2:staticConnection peIndex="0" oportIndex="0"/>
+                        </ns2:staticConnections>
+                        <ns2:operInstanceConnection operInstanceIndex="1" iportIndex="0"/>
+                    </ns2:inputPort>
+                </ns2:inputPorts>
+                <ns2:outputPorts>
+                    <ns2:outputPort tupleTypeIndex="1" transport="TCP" singleThreadedOnOutput="true" index="0" encoding="LE">
+                        <ns2:staticConnections>
+                            <ns2:staticConnection peIndex="2" iportIndex="0"/>
+                        </ns2:staticConnections>
+                        <ns2:operInstanceConnection oportIndex="0" operInstanceIndex="1"/>
+                    </ns2:outputPort>
+                </ns2:outputPorts>
+            </ns2:pe>
+            <ns2:pe restartable="false" relocatable="false" optimized="false" language="C++" index="2" class="BeJwzNE1MTy9KTU8sSU3xycxLLY4HAD16AbM">
+                <ns2:envVars/>
+                <ns2:executable dynamicLoad="true" digest="gKEWkHeruyXFf+46pqiYGAP9zWE=">
+                    <ns2:wrapper>none</ns2:wrapper>
+                    <ns2:executableUri>bin/application.Project1Part1Question2-c.dpe</ns2:executableUri>
+                    <ns2:arguments></ns2:arguments>
+                    <ns2:dependencies/>
+                </ns2:executable>
+                <ns2:operInstances>
+                    <ns2:operInstance singleThreadedOnOutputs="true" singleThreadedOnInputs="true" name="aggregatedLines" index="2" definitionIndex="2" class="aggregatedLines">
+                        <ns2:resources>
+                            <ns2:poolLocation poolIndex="0"/>
+                        </ns2:resources>
+                        <ns2:runtimeConstants>
+                            <ns2:runtimeConstant value="100" name="lit$0"/>
+                            <ns2:runtimeConstant value="{lines = 0, words = 0, chars = 0}" name="lit$1"/>
+                        </ns2:runtimeConstants>
+                        <ns2:inputPorts>
+                            <ns2:inputPort tupleTypeIndex="1" name="OneLine" isMutable="false" index="0">
+<ns2:interPeConnection oportIndex="0" operInstanceIndex="1"/>
+                            </ns2:inputPort>
+                        </ns2:inputPorts>
+                        <ns2:outputPorts>
+                            <ns2:outputPort viewable="true" streamName="aggregatedLines" tupleTypeIndex="2" name="aggregatedLines" isMutable="true" index="0">
+<ns2:interPeConnection operInstanceIndex="3" iportIndex="0"/>
+                            </ns2:outputPort>
+                        </ns2:outputPorts>
+                    </ns2:operInstance>
+                </ns2:operInstances>
+                <ns2:tracing level="error"/>
+                <ns2:inputPorts>
+                    <ns2:inputPort tupleTypeIndex="1" transport="TCP" index="0" encoding="LE">
+                        <ns2:staticConnections>
+                            <ns2:staticConnection peIndex="1" oportIndex="0"/>
+                        </ns2:staticConnections>
+                        <ns2:operInstanceConnection operInstanceIndex="2" iportIndex="0"/>
+                    </ns2:inputPort>
+                </ns2:inputPorts>
+                <ns2:outputPorts>
+                    <ns2:outputPort tupleTypeIndex="2" transport="TCP" singleThreadedOnOutput="true" index="0" encoding="LE">
+                        <ns2:staticConnections>
+                            <ns2:staticConnection peIndex="3" iportIndex="0"/>
+                        </ns2:staticConnections>
+                        <ns2:operInstanceConnection oportIndex="0" operInstanceIndex="2"/>
+                    </ns2:outputPort>
+                </ns2:outputPorts>
+            </ns2:pe>
+            <ns2:pe restartable="false" relocatable="false" optimized="false" language="C++" index="3" class="BeJwzCc7My44HAAcAAIp">
+                <ns2:envVars/>
+                <ns2:executable dynamicLoad="true" digest="+nHKSPEHqdmHSWDIHAjtZ51kLrI=">
+                    <ns2:wrapper>none</ns2:wrapper>
+                    <ns2:executableUri>bin/application.Project1Part1Question2-d.dpe</ns2:executableUri>
+                    <ns2:arguments></ns2:arguments>
+                    <ns2:dependencies/>
+                </ns2:executable>
+                <ns2:operInstances>
+                    <ns2:operInstance singleThreadedOnOutputs="true" singleThreadedOnInputs="true" name="Sink" index="3" definitionIndex="3" class="Sink">
+                        <ns2:resources>
+                            <ns2:poolLocation poolIndex="0"/>
+                        </ns2:resources>
+                        <ns2:runtimeConstants/>
+                        <ns2:inputPorts>
+                            <ns2:inputPort tupleTypeIndex="2" name="aggregatedLines" isMutable="false" index="0">
+<ns2:interPeConnection oportIndex="0" operInstanceIndex="2"/>
+                            </ns2:inputPort>
+                        </ns2:inputPorts>
+                        <ns2:outputPorts/>
+                    </ns2:operInstance>
+                </ns2:operInstances>
+                <ns2:tracing level="error"/>
+                <ns2:inputPorts>
+                    <ns2:inputPort tupleTypeIndex="2" transport="TCP" index="0" encoding="LE">
+                        <ns2:staticConnections>
+                            <ns2:staticConnection peIndex="2" oportIndex="0"/>
+                        </ns2:staticConnections>
+                        <ns2:operInstanceConnection operInstanceIndex="3" iportIndex="0"/>
+                    </ns2:inputPort>
+                </ns2:inputPorts>
+                <ns2:outputPorts/>
+            </ns2:pe>
+        </ns2:pes>
+        <ns2:operDefinitions>
+            <ns2:operDefinition kind="spl.adapter::FileSource" index="0">
+                <ns2:customMetricIndicies>
+                    <ns2:customMetricIndex>0</ns2:customMetricIndex>
+                    <ns2:customMetricIndex>1</ns2:customMetricIndex>
+                </ns2:customMetricIndicies>
+            </ns2:operDefinition>
+            <ns2:operDefinition kind="spl.relational::Functor" index="1"/>
+            <ns2:operDefinition kind="spl.relational::Aggregate" index="2">
+                <ns2:customMetricIndicies>
+                    <ns2:customMetricIndex>2</ns2:customMetricIndex>
+                </ns2:customMetricIndicies>
+            </ns2:operDefinition>
+            <ns2:operDefinition kind="spl.utility::Custom" index="3"/>
+        </ns2:operDefinitions>
+        <ns2:composites>
+            <ns2:sourceUris>
+                <ns2:uri path="file:///home/streamsadmin/StreamsStudio/workspace/Project1Part1Question2/application/Project1Part1Question2.spl" index="0"/>
+            </ns2:sourceUris>
+            <ns2:compositeOpers>
+                <ns2:compositeOper toolkitIndex="0" numberOfOutputPorts="0" numberOfInputPorts="0" kind="application::Project1Part1Question2" index="0" startLine="24" sourceIndex="0" endLine="66">
+                    <ns2:description>application::Project1Part1Question2 Composite</ns2:description>
+                </ns2:compositeOper>
+            </ns2:compositeOpers>
+            <ns2:compositeOperInstances>
+                <ns2:compositeOperInstance name="application::Project1Part1Question2" index="4" compositeOperIndex="0" startLine="24" sourceIndex="0" endLine="66">
+                    <ns2:primitiveOperInstance toolkitIndex="1" name="Data" kind="spl.adapter::FileSource" index="0" startLine="27" sourceIndex="0" endLine="36">
+                        <ns2:outputPorts>
+                            <ns2:port index="0">
+<ns2:connections>
+    <ns2:connection portKind="input" portIndex="0" operName="OneLine" operIndex="1"/>
+</ns2:connections>
+                            </ns2:port>
+                        </ns2:outputPorts>
+                    </ns2:primitiveOperInstance>
+                    <ns2:primitiveOperInstance toolkitIndex="1" name="OneLine" kind="spl.relational::Functor" index="1" startLine="38" sourceIndex="0" endLine="43">
+                        <ns2:inputPorts>
+                            <ns2:port index="0">
+<ns2:connections>
+    <ns2:connection portKind="output" portIndex="0" operName="Data" operIndex="0"/>
+</ns2:connections>
+                            </ns2:port>
+                        </ns2:inputPorts>
+                        <ns2:outputPorts>
+                            <ns2:port index="0">
+<ns2:connections>
+    <ns2:connection portKind="input" portIndex="0" operName="aggregatedLines" operIndex="2"/>
+</ns2:connections>
+                            </ns2:port>
+                        </ns2:outputPorts>
+                    </ns2:primitiveOperInstance>
+                    <ns2:primitiveOperInstance toolkitIndex="1" name="aggregatedLines" kind="spl.relational::Aggregate" index="2" startLine="45" sourceIndex="0" endLine="58">
+                        <ns2:inputPorts>
+                            <ns2:port index="0">
+<ns2:connections>
+    <ns2:connection portKind="output" portIndex="0" operName="OneLine" operIndex="1"/>
+</ns2:connections>
+                            </ns2:port>
+                        </ns2:inputPorts>
+                        <ns2:outputPorts>
+                            <ns2:port index="0">
+<ns2:connections>
+    <ns2:connection portKind="input" portIndex="0" operName="Sink" operIndex="3"/>
+</ns2:connections>
+                            </ns2:port>
+                        </ns2:outputPorts>
+                    </ns2:primitiveOperInstance>
+                    <ns2:primitiveOperInstance toolkitIndex="1" name="Sink" kind="spl.utility::Custom" index="3" startLine="60" sourceIndex="0" endLine="64">
+                        <ns2:inputPorts>
+                            <ns2:port index="0">
+<ns2:connections>
+    <ns2:connection portKind="output" portIndex="0" operName="aggregatedLines" operIndex="2"/>
+</ns2:connections>
+                            </ns2:port>
+                        </ns2:inputPorts>
+                    </ns2:primitiveOperInstance>
+                </ns2:compositeOperInstance>
+            </ns2:compositeOperInstances>
+        </ns2:composites>
+        <ns2:toolkits>
+            <ns2:toolkit version="1.0.0" uri="file:///home/streamsadmin/StreamsStudio/workspace/Project1Part1Question2" name="Project1Part1Question2" index="0"/>
+            <ns2:toolkit version="1.1.0" uri="file:///opt/ibm/InfoSphereStreams/toolkits/spl" name="spl" index="1"/>
+        </ns2:toolkits>
+        <ns2:customMetrics>
+            <ns2:customMetric name="nFilesOpened" kind="Counter" index="0">
+                <ns2:description>Number of files opened by the FileSource operator</ns2:description>
+            </ns2:customMetric>
+            <ns2:customMetric name="nInvalidTuples" kind="Counter" index="1">
+                <ns2:description>Number of tuples that failed to read correctly</ns2:description>
+            </ns2:customMetric>
+            <ns2:customMetric name="nCurrentPartitions" kind="Gauge" index="2">
+                <ns2:description>Number of partitions in the window</ns2:description>
+            </ns2:customMetric>
+        </ns2:customMetrics>
+    </ns2:application>
+</ns2:applicationSet>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<operatorInstanceModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/operator/instance" xmlns:tt="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <context>
+    <kind>spl.utility::Custom</kind>
+    <class>Sink</class>
+    <operatorModelDirectory>/opt/ibm/InfoSphereStreams/toolkits/spl/spl/utility/Custom</operatorModelDirectory>
+    <applicationDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part1_Section4</applicationDirectory>
+    <dataDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part1_Section4/data</dataDirectory>
+    <outputDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part1_Section4/output/application.Project1_Part1_Section4/Distributed</outputDirectory>
+    <optimized>false</optimized>
+    <verbose>false</verbose>
+    <networkByteOrdering>false</networkByteOrdering>
+    <codeBeautification>false</codeBeautification>
+    <includes>
+      <include>"../type/BeJwrMSwxzjTNycxLLc40Lc8vSgFSyRmJRcWWRanFpTklwSWJAOxcA2C.h"</include>
+      <include>"../type/BeJwrMc40zcnMSy3ONC3PL0oBUskZiUXFAGflAjd.h"</include>
+    </includes>
+    <stateVariables/>
+    <runtimeConstants>
+      <runtimeConstant>
+        <name>lit$0</name>
+        <cppType>SPL::rstring</cppType>
+        <splType>rstring</splType>
+        <value>" character(s)."</value>
+      </runtimeConstant>
+      <runtimeConstant>
+        <name>lit$1</name>
+        <cppType>SPL::rstring</cppType>
+        <splType>rstring</splType>
+        <value>" word(s), "</value>
+      </runtimeConstant>
+      <runtimeConstant>
+        <name>lit$2</name>
+        <cppType>SPL::rstring</cppType>
+        <splType>rstring</splType>
+        <value>" line(s), "</value>
+      </runtimeConstant>
+    </runtimeConstants>
+    <sourceLocation>
+      <file>application/Project1_Part1_Section4.spl</file>
+      <line>47</line>
+      <column>3</column>
+    </sourceLocation>
+    <productVersion>3.1.0.0</productVersion>
+    <checkpointKind>none</checkpointKind>
+  </context>
+
+  <parameters/>
+
+  <inputPorts>
+    <inputPort>
+      <index>0</index>
+      <tupleCppName>iport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMSwxzjTNycxLLc40Lc8vSgFSyRmJRcWWRanFpTklwSWJAOxcA2C</tupleCppType>
+      <tupleSPLType>tuple&lt;tuple&lt;int32 lines,int32 words,int32 chars&gt; resultSta&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>false</mutationAllowed>
+      <sourceLocation>
+        <file>application/Project1_Part1_Section4.spl</file>
+        <line>47</line>
+        <column>23</column>
+      </sourceLocation>
+      <tupleLogic>{
+    ::SPL::Functions::Utility::printStringLn((((((::SPL::spl_cast&lt;SPL::rstring, SPL::int32 &gt;::cast(iport$0.get_resultSta().get_lines()) + lit$2) + ::SPL::spl_cast&lt;SPL::rstring, SPL::int32 &gt;::cast(iport$0.get_resultSta().get_words())) + lit$1) + ::SPL::spl_cast&lt;SPL::rstring, SPL::int32 &gt;::cast(SPL::int32(iport$0.get_resultSta().get_chars() + iport$0.get_resultSta().get_lines()))) + lit$0));
+}
+</tupleLogic>
+      <attributes>
+        <attribute>
+          <name>resultSta</name>
+          <cppType>SPL::BeJwrMc40zcnMSy3ONC3PL0oBUskZiUXFAGflAjd</cppType>
+          <splType>tuple&lt;int32 lines,int32 words,int32 chars&gt;</splType>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="resultSta">
+          <tt:tuple>
+            <tt:attr name="lines" type="int32"/>
+            <tt:attr name="words" type="int32"/>
+            <tt:attr name="chars" type="int32"/>
+          </tt:tuple>
+        </tt:attr>
+      </tuple>
+    </inputPort>
+  </inputPorts>
+
+  <outputPorts/>
+
+</operatorInstanceModel>

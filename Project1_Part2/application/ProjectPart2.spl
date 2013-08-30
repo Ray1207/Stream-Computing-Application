@@ -1,0 +1,77 @@
+namespace application ;
+
+use application.filestreams::GetFileStream ;
+type lineTuple = tuple<rstring text> ;
+
+composite ProjectPart2
+{
+	graph
+		stream<rstring line> FileStream1 = TCPSource()
+		{
+			param
+				role : server ;
+				port : 23146u ;
+				format : line ;
+		}
+
+		stream<rstring line> FileStream2 = TCPSource()
+		{
+			param
+				role : server ;
+				port : 23147u ;
+				format : line ;
+		}
+
+		stream<rstring text1, rstring text2> JoinedFileStream = Barrier(FileStream1 ;
+			FileStream2)
+		{
+			output
+				JoinedFileStream : text1 = FileStream1.line, text2 = FileStream2.line ;
+		}
+		//In order to use join, we have to convert file stream to a normal stream, we can follow the way of workshop3(composite)
+		//		stream<rstring text1, rstring text2> JoinFileStream1 = Join(FileStream1 ;
+		//			FileStream2)
+		//		{
+		//			window
+		//				FileStream1 : sliding, count(50) ;
+		//				FileStream2 : sliding, count(50) ;
+		//			output
+		//				JoinFileStream1 : text1 = FileStream1.line, text2 = FileStream2.line ;
+		//		}
+		stream<float64 similarity> ComputeSimilarity = Functor(JoinedFileStream)
+		{
+			output
+				ComputeSimilarity : similarity = ComputeSimilarityScore(text1, text2) ;
+		}
+
+		stream<float64 AggregatedSimilarity> AggregateSimilarity =
+			Aggregate(ComputeSimilarity)
+		{
+			logic
+				state :
+				{
+					mutable float64 AggregatedSimilarityScore = 0 ;
+				}
+
+			window
+				ComputeSimilarity : tumbling, count(100) ;
+			output
+				AggregateSimilarity : AggregatedSimilarity =
+					Custom(init(AggregatedSimilarityScore), process(AggregatedSimilarityScore,
+					similarity), result(AggregatedSimilarityScore)) ;
+		}
+
+		() as Sink = Custom(AggregateSimilarity)
+		{
+			logic
+				state : mutable int32 count = 1 ;
+				onTuple AggregateSimilarity :
+				{
+					printStringLn("The " +(rstring) count + " hundred part: " +(rstring)
+						AggregateSimilarity) ;
+					count ++ ;
+				}
+
+		}
+
+}

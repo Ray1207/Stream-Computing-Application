@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<tupleModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/tuple" class="BeJwrMc40zcnMSy3ONC3PL0oBUskZiUXFAGflAjd" equalitySupported="true" facade="false" splType="tuple&lt;int32 lines,int32 words,int32 chars>" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <headers/>
+
+  <attributes>
+    <attribute>
+      <name>lines</name>
+      <cppType>SPL::int32</cppType>
+      <splType>int32</splType>
+    </attribute>
+    <attribute>
+      <name>words</name>
+      <cppType>SPL::int32</cppType>
+      <splType>int32</splType>
+    </attribute>
+    <attribute>
+      <name>chars</name>
+      <cppType>SPL::int32</cppType>
+      <splType>int32</splType>
+    </attribute>
+  </attributes>
+
+</tupleModel>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<peModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/pe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <context>
+    <class>BeJwzNHfOzy0oLUkNzszNzEksyiypjDc0dMvMSQ0uKUpNzDWMNzTxys_1MQ4jEm_1vnpfpk5qXGmwRn5mXHG5ompqcXpaYnlqSmgISL4wEhxR8d</class>
+    <avoidRuntimeYield>Auto</avoidRuntimeYield>
+  </context>
+
+  <operators>
+    <operator>
+      <class>ComputeSimilarity</class>
+    </operator>
+    <operator>
+      <class>FileStream1</class>
+    </operator>
+    <operator>
+      <class>JoinFileStream</class>
+    </operator>
+    <operator>
+      <class>OneLine</class>
+    </operator>
+    <operator>
+      <class>Sink</class>
+    </operator>
+    <operator>
+      <class>aggregatedLines</class>
+    </operator>
+  </operators>
+
+</peModel>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<operatorInstanceModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/operator/instance" xmlns:tt="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <context>
+    <kind>spl.relational::Aggregate</kind>
+    <class>AggregateSimilarity</class>
+    <operatorModelDirectory>/opt/ibm/InfoSphereStreams/toolkits/spl/spl/relational/Aggregate</operatorModelDirectory>
+    <applicationDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2</applicationDirectory>
+    <dataDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2/data</dataDirectory>
+    <outputDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2/output/application.ProjectPart2/Standalone</outputDirectory>
+    <optimized>false</optimized>
+    <verbose>false</verbose>
+    <networkByteOrdering>false</networkByteOrdering>
+    <codeBeautification>false</codeBeautification>
+    <includes>
+      <include>"../function/application/init.h"</include>
+      <include>"../function/application/process.h"</include>
+      <include>"../function/application/result.h"</include>
+      <include>"../type/BeJwrMXQzMnBMTy9KTU8sSU0JzszNzEksyiypBABwrglg.h"</include>
+      <include>"../type/BeJwrMXQzNCjOzM3MSSzKLKkEACi6AWU.h"</include>
+    </includes>
+    <stateVariables>
+      <stateVariable>
+        <name>state$AggregatedSimilarityScore</name>
+        <cppType>SPL::float64</cppType>
+        <splType>float64</splType>
+        <value>
+          <cppType>SPL::float64</cppType>
+          <splType>float64</splType>
+          <hasRuntimeConstant>true</hasRuntimeConstant>
+          <cppExpression>lit$1</cppExpression>
+          <splExpression>(float64)(0)</splExpression>
+          <hasFunctions>false</hasFunctions>
+          <hasSideEffects>false</hasSideEffects>
+          <hasStreamAttributes>false</hasStreamAttributes>
+          <sourceLocation>
+            <file>application/ProjectPart2.spl</file>
+            <line>65</line>
+            <column>50</column>
+          </sourceLocation>
+        </value>
+        <sourceLocation>
+          <file>application/ProjectPart2.spl</file>
+          <line>65</line>
+          <column>22</column>
+        </sourceLocation>
+      </stateVariable>
+    </stateVariables>
+    <runtimeConstants>
+      <runtimeConstant>
+        <name>lit$0</name>
+        <cppType>SPL::int32</cppType>
+        <splType>int32</splType>
+        <value>100</value>
+      </runtimeConstant>
+      <runtimeConstant>
+        <name>lit$1</name>
+        <cppType>SPL::float64</cppType>
+        <splType>float64</splType>
+        <value>0</value>
+      </runtimeConstant>
+    </runtimeConstants>
+    <sourceLocation>
+      <file>application/ProjectPart2.spl</file>
+      <line>60</line>
+      <column>3</column>
+    </sourceLocation>
+    <productVersion>3.1.0.0</productVersion>
+    <types>
+      <type index="0" type="float64"/>
+      <type index="1" type="boolean"/>
+      <type index="2" type="tuple&lt;float64 similarity>"/>
+    </types>
+    <checkpointKind>none</checkpointKind>
+  </context>
+
+  <parameters/>
+
+  <inputPorts>
+    <inputPort>
+      <index>0</index>
+      <tupleCppName>iport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMXQzNCjOzM3MSSzKLKkEACi6AWU</tupleCppType>
+      <tupleSPLType>tuple&lt;float64 similarity&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>false</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>60</line>
+        <column>72</column>
+      </sourceLocation>
+      <window>
+        <partitioned>false</partitioned>
+        <evictionPolicy>
+          <type>count</type>
+          <size>
+            <cppType>SPL::int32</cppType>
+            <splType>int32</splType>
+            <hasRuntimeConstant>true</hasRuntimeConstant>
+            <cppExpression>lit$0</cppExpression>
+            <splExpression>100</splExpression>
+            <hasFunctions>false</hasFunctions>
+            <hasSideEffects>false</hasSideEffects>
+            <hasStreamAttributes>false</hasStreamAttributes>
+            <sourceLocation>
+              <file>application/ProjectPart2.spl</file>
+              <line>69</line>
+              <column>41</column>
+            </sourceLocation>
+          </size>
+        </evictionPolicy>
+        <sourceLocation>
+          <file>application/ProjectPart2.spl</file>
+          <line>69</line>
+          <column>5</column>
+        </sourceLocation>
+      </window>
+      <attributes>
+        <attribute>
+          <name>similarity</name>
+          <cppType>SPL::float64</cppType>
+          <splType>float64</splType>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="similarity" type="float64"/>
+      </tuple>
+    </inputPort>
+  </inputPorts>
+
+  <outputPorts>
+    <outputPort>
+      <index>0</index>
+      <tupleCppName>oport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMXQzMnBMTy9KTU8sSU0JzszNzEksyiypBABwrglg</tupleCppType>
+      <tupleSPLType>tuple&lt;float64 AggregatedSimilarity&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>true</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>60</line>
+        <column>3</column>
+      </sourceLocation>
+      <attributes>
+        <attribute>
+          <name>AggregatedSimilarity</name>
+          <cppType>SPL::float64</cppType>
+          <splType>float64</splType>
+          <assignment>
+            <sourceLocation>
+              <file>application/ProjectPart2.spl</file>
+              <line>71</line>
+              <column>27</column>
+            </sourceLocation>
+            <outputFunction>Custom</outputFunction>
+            <values>
+              <value>
+                <cppType>SPL::boolean</cppType>
+                <splType>boolean</splType>
+                <hasRuntimeConstant>false</hasRuntimeConstant>
+                <cppExpression>::application::init(state$AggregatedSimilarityScore)</cppExpression>
+                <splExpression>init(AggregatedSimilarityScore)</splExpression>
+                <hasFunctions>true</hasFunctions>
+                <hasSideEffects>true</hasSideEffects>
+                <hasStreamAttributes>false</hasStreamAttributes>
+                <sourceLocation>
+                  <file>application/ProjectPart2.spl</file>
+                  <line>71</line>
+                  <column>57</column>
+                </sourceLocation>
+                <expressionTree>
+                  <call fcn="application::init" type="1">
+                    <args count="1">
+                      <arg type="0">
+                        <symbol id="AggregatedSimilarityScore" type="0"/>
+                      </arg>
+                    </args>
+                  </call>
+                </expressionTree>
+              </value>
+              <value>
+                <cppType>SPL::boolean</cppType>
+                <splType>boolean</splType>
+                <hasRuntimeConstant>false</hasRuntimeConstant>
+                <cppExpression>::application::process(state$AggregatedSimilarityScore, iport$0.get_similarity())</cppExpression>
+                <splExpression>process(AggregatedSimilarityScore, ComputeSimilarity.similarity)</splExpression>
+                <hasFunctions>true</hasFunctions>
+                <hasSideEffects>true</hasSideEffects>
+                <hasStreamAttributes>true</hasStreamAttributes>
+                <sourceLocation>
+                  <file>application/ProjectPart2.spl</file>
+                  <line>71</line>
+                  <column>90</column>
+                </sourceLocation>
+                <expressionTree>
+                  <call fcn="application::process" type="1">
+                    <args count="2">
+                      <arg type="0">
+                        <symbol id="AggregatedSimilarityScore" type="0"/>
+                      </arg>
+                      <arg type="0">
+                        <attribute attribute="similarity" type="0">
+                          <lhs>
+                            <stream name="ComputeSimilarity" port="0" type="2"/>
+                          </lhs>
+                        </attribute>
+                      </arg>
+                    </args>
+                  </call>
+                </expressionTree>
+              </value>
+              <value>
+                <cppType>SPL::float64</cppType>
+                <splType>float64</splType>
+                <hasRuntimeConstant>false</hasRuntimeConstant>
+                <cppExpression>::application::result(state$AggregatedSimilarityScore)</cppExpression>
+                <splExpression>result(AggregatedSimilarityScore)</splExpression>
+                <hasFunctions>true</hasFunctions>
+                <hasSideEffects>true</hasSideEffects>
+                <hasStreamAttributes>false</hasStreamAttributes>
+                <sourceLocation>
+                  <file>application/ProjectPart2.spl</file>
+                  <line>72</line>
+                  <column>6</column>
+                </sourceLocation>
+                <expressionTree>
+                  <call fcn="application::result" type="0">
+                    <args count="1">
+                      <arg type="0">
+                        <symbol id="AggregatedSimilarityScore" type="0"/>
+                      </arg>
+                    </args>
+                  </call>
+                </expressionTree>
+              </value>
+            </values>
+          </assignment>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="AggregatedSimilarity" type="float64"/>
+      </tuple>
+      <finalPunctuationPortScope>
+        <port>0</port>
+      </finalPunctuationPortScope>
+    </outputPort>
+  </outputPorts>
+
+</operatorInstanceModel>

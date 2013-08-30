@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<applicationSet xmlns="http://www.ibm.com/xmlns/prod/streams/application" name="application::Project1Part1.appset" productVersion="3.1.0.0" xmlns:tt="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <description>application::Project1Part1 application set</description>
+
+  <application applicationDirectory="../../../." applicationScope="Default" checkpointDirectory="../../../data/ckpt" dataDirectory="../../../data" name="application::Project1Part1" outputDirectory="/home/streamsadmin/StreamsStudio/workspace/Project1Part1/output/application.Project1Part1/Distributed" version="1.0.0">
+    <libraries/>
+    <hostpools>
+      <hostpool index="0" membershipMode="shared" name="$default"/>
+    </hostpools>
+    <tupleTypes>
+      <tupleType index="0">
+        <attribute name="contents" type="rstring"/>
+        <tuple>
+          <tt:attr name="contents" type="rstring"/>
+        </tuple>
+      </tupleType>
+      <tupleType index="1">
+        <attribute name="contents" type="rstring"/>
+        <attribute name="LineNumber" type="uint32"/>
+        <tuple>
+          <tt:attr name="contents" type="rstring"/>
+          <tt:attr name="LineNumber" type="uint32"/>
+        </tuple>
+      </tupleType>
+    </tupleTypes>
+    <pes>
+      <pe class="BeJwz9cnMSy2OBwAJewKQ" index="0" language="C++" optimized="false" relocatable="false" restartable="false">
+        <envVars/>
+        <executable digest="kCxEgpCG+PIoCAIMPxJ4U7CalP0=" dynamicLoad="true">
+          <wrapper>none</wrapper>
+          <executableUri>bin/application.Project1Part1-a.dpe</executableUri>
+          <arguments/>
+          <dependencies/>
+        </executable>
+        <operInstances>
+          <operInstance class="Lines" definitionIndex="0" index="0" name="Lines" singleThreadedOnInputs="true" singleThreadedOnOutputs="true">
+            <resources>
+              <poolLocation poolIndex="0"/>
+            </resources>
+            <runtimeConstants>
+              <runtimeConstant name="lit$0" value="&quot;Shaks12.txt&quot;"/>
+            </runtimeConstants>
+            <inputPorts/>
+            <outputPorts>
+              <outputPort index="0" isMutable="true" name="Lines" streamName="Lines" tupleTypeIndex="0" viewable="true">
+                <interPeConnection iportIndex="0" operInstanceIndex="1"/>
+              </outputPort>
+            </outputPorts>
+          </operInstance>
+        </operInstances>
+        <tracing level="error"/>
+        <inputPorts/>
+        <outputPorts>
+          <outputPort encoding="LE" index="0" singleThreadedOnOutput="true" transport="TCP" tupleTypeIndex="0">
+            <staticConnections>
+              <staticConnection iportIndex="0" peIndex="1"/>
+            </staticConnections>
+            <operInstanceConnection operInstanceIndex="0" oportIndex="0"/>
+          </outputPort>
+        </outputPorts>
+      </pe>
+      <pe class="BeJyz8CvNTUotSk2JBwAT_1gPK" index="1" language="C++" optimized="false" relocatable="false" restartable="false">
+        <envVars/>
+        <executable digest="OvogRRDWILoHDGxU4NBuuwEAm6A=" dynamicLoad="true">
+          <wrapper>none</wrapper>
+          <executableUri>bin/application.Project1Part1-b.dpe</executableUri>
+          <arguments/>
+          <dependencies/>
+        </executable>
+        <operInstances>
+          <operInstance class="Numbered" definitionIndex="1" index="1" name="Numbered" singleThreadedOnInputs="true" singleThreadedOnOutputs="true">
+            <resources>
+              <poolLocation poolIndex="0"/>
+            </resources>
+            <runtimeConstants>
+              <runtimeConstant name="lit$0" value="0"/>
+            </runtimeConstants>
+            <inputPorts>
+              <inputPort index="0" isMutable="false" name="Lines" tupleTypeIndex="0">
+                <interPeConnection operInstanceIndex="0" oportIndex="0"/>
+              </inputPort>
+            </inputPorts>
+            <outputPorts>
+              <outputPort index="0" isMutable="true" name="Numbered" streamName="Numbered" tupleTypeIndex="1" viewable="true">
+                <interPeConnection iportIndex="0" operInstanceIndex="2"/>
+              </outputPort>
+            </outputPorts>
+          </operInstance>
+        </operInstances>
+        <tracing level="error"/>
+        <inputPorts>
+          <inputPort encoding="LE" index="0" transport="TCP" tupleTypeIndex="0">
+            <staticConnections>
+              <staticConnection oportIndex="0" peIndex="0"/>
+            </staticConnections>
+            <operInstanceConnection iportIndex="0" operInstanceIndex="1"/>
+          </inputPort>
+        </inputPorts>
+        <outputPorts>
+          <outputPort encoding="LE" index="0" singleThreadedOnOutput="true" transport="TCP" tupleTypeIndex="1">
+            <staticConnections>
+              <staticConnection iportIndex="0" peIndex="2"/>
+            </staticConnections>
+            <operInstanceConnection operInstanceIndex="1" oportIndex="0"/>
+          </outputPort>
+        </outputPorts>
+      </pe>
+      <pe class="BeJwzCc7My44HAAcAAIp" index="2" language="C++" optimized="false" relocatable="false" restartable="false">
+        <envVars/>
+        <executable digest="5+X/YrrKjsZVCEZ5LzZF8OlLD2A=" dynamicLoad="true">
+          <wrapper>none</wrapper>
+          <executableUri>bin/application.Project1Part1-c.dpe</executableUri>
+          <arguments/>
+          <dependencies/>
+        </executable>
+        <operInstances>
+          <operInstance class="Sink" definitionIndex="2" index="2" name="Sink" singleThreadedOnInputs="true" singleThreadedOnOutputs="true">
+            <resources>
+              <poolLocation poolIndex="0"/>
+            </resources>
+            <runtimeConstants/>
+            <inputPorts>
+              <inputPort index="0" isMutable="false" name="Numbered" tupleTypeIndex="1">
+                <interPeConnection operInstanceIndex="1" oportIndex="0"/>
+              </inputPort>
+            </inputPorts>
+            <outputPorts/>
+          </operInstance>
+        </operInstances>
+        <tracing level="error"/>
+        <inputPorts>
+          <inputPort encoding="LE" index="0" transport="TCP" tupleTypeIndex="1">
+            <staticConnections>
+              <staticConnection oportIndex="0" peIndex="1"/>
+            </staticConnections>
+            <operInstanceConnection iportIndex="0" operInstanceIndex="2"/>
+          </inputPort>
+        </inputPorts>
+        <outputPorts/>
+      </pe>
+    </pes>
+    <operDefinitions>
+      <operDefinition index="0" kind="spl.adapter::FileSource">
+        <customMetricIndicies>
+          <customMetricIndex>0</customMetricIndex>
+          <customMetricIndex>1</customMetricIndex>
+        </customMetricIndicies>
+      </operDefinition>
+      <operDefinition index="1" kind="spl.relational::Functor"/>
+      <operDefinition index="2" kind="spl.utility::Custom"/>
+    </operDefinitions>
+    <composites>
+      <sourceUris>
+        <uri index="0" path="file:///home/streamsadmin/StreamsStudio/workspace/Project1Part1/application/Project1Part1.spl"/>
+      </sourceUris>
+      <compositeOpers>
+        <compositeOper endLine="28" index="0" kind="application::Project1Part1" numberOfInputPorts="0" numberOfOutputPorts="0" sourceIndex="0" startLine="3" toolkitIndex="0">
+          <description>application::Project1Part1 Composite</description>
+        </compositeOper>
+      </compositeOpers>
+      <compositeOperInstances>
+        <compositeOperInstance compositeOperIndex="0" endLine="28" index="3" name="application::Project1Part1" sourceIndex="0" startLine="3">
+          <primitiveOperInstance endLine="11" index="0" kind="spl.adapter::FileSource" name="Lines" sourceIndex="0" startLine="6" toolkitIndex="1">
+            <outputPorts>
+              <port index="0">
+                <connections>
+                  <connection operIndex="1" operName="Numbered" portIndex="0" portKind="input"/>
+                </connections>
+              </port>
+            </outputPorts>
+          </primitiveOperInstance>
+          <primitiveOperInstance endLine="20" index="1" kind="spl.relational::Functor" name="Numbered" sourceIndex="0" startLine="13" toolkitIndex="1">
+            <inputPorts>
+              <port index="0">
+                <connections>
+                  <connection operIndex="0" operName="Lines" portIndex="0" portKind="output"/>
+                </connections>
+              </port>
+            </inputPorts>
+            <outputPorts>
+              <port index="0">
+                <connections>
+                  <connection operIndex="2" operName="Sink" portIndex="0" portKind="input"/>
+                </connections>
+              </port>
+            </outputPorts>
+          </primitiveOperInstance>
+          <primitiveOperInstance endLine="26" index="2" kind="spl.utility::Custom" name="Sink" sourceIndex="0" startLine="22" toolkitIndex="1">
+            <inputPorts>
+              <port index="0">
+                <connections>
+                  <connection operIndex="1" operName="Numbered" portIndex="0" portKind="output"/>
+                </connections>
+              </port>
+            </inputPorts>
+          </primitiveOperInstance>
+        </compositeOperInstance>
+      </compositeOperInstances>
+    </composites>
+    <toolkits>
+      <toolkit index="0" name="Project1Part1" uri="file:///home/streamsadmin/StreamsStudio/workspace/Project1Part1" version="1.0.0"/>
+      <toolkit index="1" name="spl" uri="file:///opt/ibm/InfoSphereStreams/toolkits/spl" version="1.1.0"/>
+    </toolkits>
+    <customMetrics>
+      <customMetric index="0" kind="Counter" name="nFilesOpened">
+        <description>Number of files opened by the FileSource operator</description>
+      </customMetric>
+      <customMetric index="1" kind="Counter" name="nInvalidTuples">
+        <description>Number of tuples that failed to read correctly</description>
+      </customMetric>
+    </customMetrics>
+  </application>
+
+</applicationSet>

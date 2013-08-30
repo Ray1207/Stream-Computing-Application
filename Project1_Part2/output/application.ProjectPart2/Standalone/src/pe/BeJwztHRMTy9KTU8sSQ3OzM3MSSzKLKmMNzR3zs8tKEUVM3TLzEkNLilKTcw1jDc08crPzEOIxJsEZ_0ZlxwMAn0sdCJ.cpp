@@ -1,0 +1,27 @@
+// eJxjdCwtyWdkNGV0TE8vSk1PLEkNzszNzEksyiypZHTOzy0oRRFxy8xJDS4pSk3MNWT0ys_1MQ_1AZgzPzsgEkYRu3
+
+
+#include "BeJwztHRMTy9KTU8sSQ3OzM3MSSzKLKmMNzR3zs8tKEUVM3TLzEkNLilKTcw1jDc08crPzEOIxJsEZ_0ZlxwMAn0sdCJ.h"
+#include <dst-config.h>
+#include <SPL/Runtime/Utility/BackoffSpinner.h>
+
+
+using namespace SPL;
+
+extern int PE_Version;
+
+#define MYPE BeJwztHRMTy9KTU8sSQ3OzM3MSSzKLKmMNzR3zs8tKEUVM3TLzEkNLilKTcw1jDc08crPzEOIxJsEZ_0ZlxwMAn0sdCJ
+
+
+
+MYPE::MYPE(bool isStandalone/*=false*/) 
+    : SPL::PE(isStandalone, NULL)
+{
+   PE_Version = 3100;
+   BackoffSpinner::setYieldBehaviour(BackoffSpinner::Auto);
+}
+
+
+
+MAKE_PE(SPL::MYPE);
+

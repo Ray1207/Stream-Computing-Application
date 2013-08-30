@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<operatorInstanceModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/operator/instance" xmlns:tt="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <context>
+    <kind>spl.relational::Functor</kind>
+    <class>FileStream1Normal</class>
+    <operatorModelDirectory>/opt/ibm/InfoSphereStreams/toolkits/spl/spl/relational/Functor</operatorModelDirectory>
+    <applicationDirectory>/home/streamsadmin/StreamsStudio/workspace/ProjectPart2</applicationDirectory>
+    <dataDirectory>/home/streamsadmin/StreamsStudio/workspace/ProjectPart2/data</dataDirectory>
+    <outputDirectory>/home/streamsadmin/StreamsStudio/workspace/ProjectPart2/output/application.ProjectPart2/Standalone</outputDirectory>
+    <optimized>false</optimized>
+    <verbose>false</verbose>
+    <networkByteOrdering>false</networkByteOrdering>
+    <codeBeautification>false</codeBeautification>
+    <includes>
+      <include>"../type/BeJwrMSw2KUmtKAEADRgDAS.h"</include>
+      <include>"../type/BeJwrMSw2ycnMSwUADOECD1.h"</include>
+    </includes>
+    <stateVariables/>
+    <runtimeConstants/>
+    <sourceLocation>
+      <file>application/ProjectPart2.spl</file>
+      <line>16</line>
+      <column>1</column>
+    </sourceLocation>
+    <productVersion>3.1.0.0</productVersion>
+    <checkpointKind>none</checkpointKind>
+  </context>
+
+  <parameters/>
+
+  <inputPorts>
+    <inputPort>
+      <index>0</index>
+      <tupleCppName>iport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMSw2ycnMSwUADOECD1</tupleCppType>
+      <tupleSPLType>tuple&lt;rstring line&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>false</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>16</line>
+        <column>47</column>
+      </sourceLocation>
+      <attributes>
+        <attribute>
+          <name>line</name>
+          <cppType>SPL::rstring</cppType>
+          <splType>rstring</splType>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="line" type="rstring"/>
+      </tuple>
+    </inputPort>
+  </inputPorts>
+
+  <outputPorts>
+    <outputPort>
+      <index>0</index>
+      <tupleCppName>oport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMSw2KUmtKAEADRgDAS</tupleCppType>
+      <tupleSPLType>tuple&lt;rstring text&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>true</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>16</line>
+        <column>1</column>
+      </sourceLocation>
+      <attributes>
+        <attribute>
+          <name>text</name>
+          <cppType>SPL::rstring</cppType>
+          <splType>rstring</splType>
+          <assignment>
+            <sourceLocation>
+              <file>application/ProjectPart2.spl</file>
+              <line>19</line>
+              <column>25</column>
+            </sourceLocation>
+            <values>
+              <value>
+                <cppType>SPL::rstring</cppType>
+                <splType>rstring</splType>
+                <hasRuntimeConstant>false</hasRuntimeConstant>
+                <cppExpression>iport$0.get_line()</cppExpression>
+                <splExpression>FileStream1.line</splExpression>
+                <hasFunctions>false</hasFunctions>
+                <hasSideEffects>false</hasSideEffects>
+                <hasStreamAttributes>true</hasStreamAttributes>
+                <sourceLocation>
+                  <file>application/ProjectPart2.spl</file>
+                  <line>19</line>
+                  <column>30</column>
+                </sourceLocation>
+              </value>
+            </values>
+          </assignment>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="text" type="rstring"/>
+      </tuple>
+      <finalPunctuationPortScope>
+        <port>0</port>
+      </finalPunctuationPortScope>
+    </outputPort>
+  </outputPorts>
+
+</operatorInstanceModel>

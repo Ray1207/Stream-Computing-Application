@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<operatorInstanceModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/operator/instance" xmlns:tt="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <context>
+    <kind>spl.relational::Functor</kind>
+    <class>ComputeSimilarity</class>
+    <operatorModelDirectory>/opt/ibm/InfoSphereStreams/toolkits/spl/spl/relational/Functor</operatorModelDirectory>
+    <applicationDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2</applicationDirectory>
+    <dataDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2/data</dataDirectory>
+    <outputDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2/output/application.ProjectPart2/Standalone</outputDirectory>
+    <optimized>false</optimized>
+    <verbose>false</verbose>
+    <networkByteOrdering>false</networkByteOrdering>
+    <codeBeautification>false</codeBeautification>
+    <includes>
+      <include>"../function/application/ComputeSimilarityScore.h"</include>
+      <include>"../type/BeJwrMSo2LUmtKDGEUEYAMgkFDk.h"</include>
+      <include>"../type/BeJwrMXQzNCjOzM3MSSzKLKkEACi6AWU.h"</include>
+    </includes>
+    <stateVariables/>
+    <runtimeConstants/>
+    <sourceLocation>
+      <file>application/ProjectPart2.spl</file>
+      <line>54</line>
+      <column>3</column>
+    </sourceLocation>
+    <productVersion>3.1.0.0</productVersion>
+    <checkpointKind>none</checkpointKind>
+  </context>
+
+  <parameters/>
+
+  <inputPorts>
+    <inputPort>
+      <index>0</index>
+      <tupleCppName>iport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMSo2LUmtKDGEUEYAMgkFDk</tupleCppType>
+      <tupleSPLType>tuple&lt;rstring text1,rstring text2&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>false</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>54</line>
+        <column>58</column>
+      </sourceLocation>
+      <attributes>
+        <attribute>
+          <name>text1</name>
+          <cppType>SPL::rstring</cppType>
+          <splType>rstring</splType>
+        </attribute>
+        <attribute>
+          <name>text2</name>
+          <cppType>SPL::rstring</cppType>
+          <splType>rstring</splType>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="text1" type="rstring"/>
+        <tt:attr name="text2" type="rstring"/>
+      </tuple>
+    </inputPort>
+  </inputPorts>
+
+  <outputPorts>
+    <outputPort>
+      <index>0</index>
+      <tupleCppName>oport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMXQzNCjOzM3MSSzKLKkEACi6AWU</tupleCppType>
+      <tupleSPLType>tuple&lt;float64 similarity&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>true</mutationAllowed>
+      <sourceLocation>
+        <file>application/ProjectPart2.spl</file>
+        <line>54</line>
+        <column>3</column>
+      </sourceLocation>
+      <attributes>
+        <attribute>
+          <name>similarity</name>
+          <cppType>SPL::float64</cppType>
+          <splType>float64</splType>
+          <assignment>
+            <sourceLocation>
+              <file>application/ProjectPart2.spl</file>
+              <line>57</line>
+              <column>25</column>
+            </sourceLocation>
+            <values>
+              <value>
+                <cppType>SPL::float64</cppType>
+                <splType>float64</splType>
+                <hasRuntimeConstant>false</hasRuntimeConstant>
+                <cppExpression>::application::ComputeSimilarityScore(iport$0.get_text1(), iport$0.get_text2())</cppExpression>
+                <splExpression>ComputeSimilarityScore(JoinFileStream.text1, JoinFileStream.text2)</splExpression>
+                <hasFunctions>true</hasFunctions>
+                <hasSideEffects>false</hasSideEffects>
+                <hasStreamAttributes>true</hasStreamAttributes>
+                <sourceLocation>
+                  <file>application/ProjectPart2.spl</file>
+                  <line>57</line>
+                  <column>38</column>
+                </sourceLocation>
+              </value>
+            </values>
+          </assignment>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="similarity" type="float64"/>
+      </tuple>
+      <finalPunctuationPortScope>
+        <port>0</port>
+      </finalPunctuationPortScope>
+    </outputPort>
+  </outputPorts>
+
+</operatorInstanceModel>

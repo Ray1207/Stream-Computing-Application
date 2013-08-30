@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<operatorInstanceModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/operator/instance" xmlns:tt="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <context>
+    <kind>spl.utility::Custom</kind>
+    <class>Sink</class>
+    <operatorModelDirectory>/opt/ibm/InfoSphereStreams/toolkits/spl/spl/utility/Custom</operatorModelDirectory>
+    <applicationDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1Part1</applicationDirectory>
+    <dataDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1Part1/data</dataDirectory>
+    <outputDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1Part1/output/application.Project1Part1/Distributed</outputDirectory>
+    <optimized>false</optimized>
+    <verbose>false</verbose>
+    <networkByteOrdering>false</networkByteOrdering>
+    <codeBeautification>false</codeBeautification>
+    <includes>
+      <include>"../type/BeJwrMSq2SM7PK0nNKykuNTTwycxL9SvNTUotAgB6ZgmH.h"</include>
+    </includes>
+    <stateVariables/>
+    <runtimeConstants/>
+    <sourceLocation>
+      <file>application/Project1Part1.spl</file>
+      <line>22</line>
+      <column>3</column>
+    </sourceLocation>
+    <productVersion>3.1.0.0</productVersion>
+    <checkpointKind>none</checkpointKind>
+  </context>
+
+  <parameters/>
+
+  <inputPorts>
+    <inputPort>
+      <index>0</index>
+      <tupleCppName>iport$0</tupleCppName>
+      <tupleCppType>SPL::BeJwrMSq2SM7PK0nNKykuNTTwycxL9SvNTUotAgB6ZgmH</tupleCppType>
+      <tupleSPLType>tuple&lt;rstring contents,uint32 LineNumber&gt;</tupleSPLType>
+      <facade>false</facade>
+      <mutationAllowed>false</mutationAllowed>
+      <sourceLocation>
+        <file>application/Project1Part1.spl</file>
+        <line>22</line>
+        <column>23</column>
+      </sourceLocation>
+      <tupleLogic>::SPL::Functions::Utility::printStringLn(::SPL::spl_cast&lt;SPL::rstring, SPL::uint32 &gt;::cast(iport$0.get_LineNumber()));
+</tupleLogic>
+      <attributes>
+        <attribute>
+          <name>contents</name>
+          <cppType>SPL::rstring</cppType>
+          <splType>rstring</splType>
+        </attribute>
+        <attribute>
+          <name>LineNumber</name>
+          <cppType>SPL::uint32</cppType>
+          <splType>uint32</splType>
+        </attribute>
+      </attributes>
+      <tuple>
+        <tt:attr name="contents" type="rstring"/>
+        <tt:attr name="LineNumber" type="uint32"/>
+      </tuple>
+    </inputPort>
+  </inputPorts>
+
+  <outputPorts/>
+
+</operatorInstanceModel>
