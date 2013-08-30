@@ -78,7 +78,12 @@
             <resources>
               <poolLocation poolIndex="0"/>
             </resources>
-            <runtimeConstants/>
+            <runtimeConstants>
+              <runtimeConstant name="lit$0" value="50"/>
+              <runtimeConstant name="lit$1" value="1"/>
+              <runtimeConstant name="lit$2" value="50"/>
+              <runtimeConstant name="lit$3" value="1"/>
+            </runtimeConstants>
             <inputPorts>
               <inputPort index="0" isMutable="false" name="FileStream1" tupleTypeIndex="0">
                 <intraPeConnection operInstanceIndex="0" oportIndex="0"/>
@@ -114,8 +119,9 @@
               <poolLocation poolIndex="0"/>
             </resources>
             <runtimeConstants>
-              <runtimeConstant name="lit$0" value="100"/>
-              <runtimeConstant name="lit$1" value="0"/>
+              <runtimeConstant name="lit$0" value="50"/>
+              <runtimeConstant name="lit$1" value="1"/>
+              <runtimeConstant name="lit$2" value="0"/>
             </runtimeConstants>
             <inputPorts>
               <inputPort index="0" isMutable="false" name="ComputeSimilarity" tupleTypeIndex="2">
@@ -159,11 +165,16 @@
           <customMetricIndex>3</customMetricIndex>
         </customMetricIndicies>
       </operDefinition>
-      <operDefinition index="1" kind="spl.utility::Barrier"/>
+      <operDefinition index="1" kind="spl.relational::Join">
+        <customMetricIndicies>
+          <customMetricIndex>4</customMetricIndex>
+          <customMetricIndex>5</customMetricIndex>
+        </customMetricIndicies>
+      </operDefinition>
       <operDefinition index="2" kind="spl.relational::Functor"/>
       <operDefinition index="3" kind="spl.relational::Aggregate">
         <customMetricIndicies>
-          <customMetricIndex>4</customMetricIndex>
+          <customMetricIndex>6</customMetricIndex>
         </customMetricIndicies>
       </operDefinition>
       <operDefinition index="4" kind="spl.utility::Custom"/>
@@ -201,7 +212,7 @@
               </port>
             </outputPorts>
           </primitiveOperInstance>
-          <primitiveOperInstance endLine="30" index="2" kind="spl.utility::Barrier" name="JoinedFileStream" sourceIndex="0" startLine="25" toolkitIndex="1">
+          <primitiveOperInstance endLine="40" index="2" kind="spl.relational::Join" name="JoinedFileStream" sourceIndex="0" startLine="32" toolkitIndex="1">
             <inputPorts>
               <port index="0">
                 <connections>
@@ -283,7 +294,13 @@
       <customMetric index="3" kind="Counter" name="nConfirmWireFormatFailures">
         <description>Number of times the input connection wire format handshake failed</description>
       </customMetric>
-      <customMetric index="4" kind="Gauge" name="nCurrentPartitions">
+      <customMetric index="4" kind="Gauge" name="nCurrentPartitionsLHS">
+        <description>Number of partitions in the left input port window</description>
+      </customMetric>
+      <customMetric index="5" kind="Gauge" name="nCurrentPartitionsRHS">
+        <description>Number of partitions in the right input port window</description>
+      </customMetric>
+      <customMetric index="6" kind="Gauge" name="nCurrentPartitions">
         <description>Number of partitions in the window</description>
       </customMetric>
     </customMetrics>

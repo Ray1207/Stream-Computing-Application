@@ -1,4 +1,4 @@
-// eJyNUt9PwjAQzv0nxvAAiVk3UKJ72wgvwBAziL6ROsoodO3S3kK2v94NcKCiM5c_0tPnuvh89kwpLM0GRK0mF63pxrFlMkYF9qAe4tSyyzmRUIQhNU8GjA5pwydHa3P4OSLWKmDF_1YjQzmajHYJ4y4rPRXgdvL0Ug_1WCeP43ni0cTLuxRYYppMdyZnOep7_1l7HYv4eud0sH0ugl4QhsV4Mt4NvQHve6_0LCuyAwdJeqza6CnnCBdUc8zBSmkE4m7juWiiK_1XuALgiOLfv4yiX2unB4cb7hgGxUwohBzWhi6CrhkoTHS4jZiiuyV3pnUhoxMtNqyyJ0ljOqsUtWFClIJavMnfLwVOmasskTcNBVnx2pTCI4Fzqdk_1SqoDJeG4VP2RWdukr3n_1AhKbkduBblmWGQGVQJ9I7z35USjMqS1nUv9qCSzLHd8DWdhhmnhWsac3dzStiKGS7PqbQ7na_0f_0oPguK2NMstUPwCd8xuc
+// eJyNUsFugkAQzfxJ03jQpGFBW9NyE_0NFxdqgaW9miyuuLrtkd4iBry_0gVVu1NGQPzLyZee_1NmERYmgmKXEkqXLcXRZpFFBnY1fcE95ZFVqkMSwShSSJ4WKEJlxyt9f1tQKJVyIz5E6OZScWxDWYJIx4b7rT_18Zb70vNn2ctoNn82wdwe5iaf5IOtyXiWeD1vpyMRXa_0c9Devud_1xgyAfjUfbQa_1Pu733eQl2wGAhr3EUugx4zAXVHLMgVJpBMB277kooit1HgA4Ijg17H_0USO22oIs5FpP2rEshaxYwY1IzGhi5jLkmw_1wkwXXJFdkpvTUJDRqZabViIzmJKNbbJkiIFqWS5Bad4PFH6SKJOJXDQZZ0dqlQiOGc8nYOYInsrWY6D0qWjK_1CtqEypq0z_0symIC1oOXPP9NKGfGlRxYXrV_11Mpwagsxrru2dGUhDk2a_1bYqulxuM66Ng93B_1OtiOHi5Eqz1fq574sB_09OupVm4_0gVNQyfD
 
 
 
@@ -61,7 +61,8 @@ public:
     
     
     SPL::int32 lit$0;
-    SPL::float64 lit$1;
+    SPL::int32 lit$1;
+    SPL::float64 lit$2;
     
     SPL::float64 state$AggregatedSimilarityScore;
     
@@ -98,28 +99,37 @@ private:
 };
  
 class MY_OPERATOR : public MY_BASE_OPERATOR, 
-                    public ::SPL::WindowEvent<SPL::BeJwrMXQzNCjOzM3MSSzKLKkEACi6AWU>
+                    public ::SPL::WindowEvent<SPL::BeJwrMXQzNCjOzM3MSSzKLKkEACi6AWU*>
 {
 public:
     typedef int32_t GroupByType; 
     typedef int32_t PartitionByType; 
-    typedef ::SPL::TumblingWindow<IPort0Type> WindowType;
-    typedef ::SPL::WindowEvent<IPort0Type> WindowEventType;
+    typedef ::SPL::SlidingWindow<IPort0Type*> WindowType;
+    typedef ::SPL::WindowEvent<IPort0Type*> WindowEventType;
     MY_OPERATOR();
     ~MY_OPERATOR();
     void process(Tuple const & tuple, uint32_t port); 
 
 
-    void beforeWindowFlushEvent(WindowEventType::WindowType & window, 
-                                WindowEventType::PartitionType const & partition);
+
+    void onWindowInitialFullEvent(WindowEventType::WindowType & window, 
+                                  WindowEventType::PartitionType const & partition);
 
 
+    void onWindowTriggerEvent(WindowEventType::WindowType & window, 
+                              WindowEventType::PartitionType const & partition);
 
-    struct Tumbling$AggregateSimilarity;
+    void beforeTupleEvictionEvent(WindowEventType::WindowType & window, 
+                                  WindowEventType::TupleType & tuple, 
+                                  WindowEventType::PartitionType const & partition);
+
+
 
 private:
     WindowType _window;
     Mutex    _mutex;
+
+    std::tr1::unordered_set<WindowEventType::PartitionType> _windowFull;
 
     Metric& _partitionCount;
 }; 

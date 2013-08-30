@@ -2,9 +2,9 @@
 <operatorInstanceModel xmlns="http://www.ibm.com/xmlns/prod/streams/spl/operator/instance" xmlns:tt="http://www.ibm.com/xmlns/prod/streams/spl/tupleType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <context>
-    <kind>spl.utility::Barrier</kind>
+    <kind>spl.relational::Join</kind>
     <class>JoinedFileStream</class>
-    <operatorModelDirectory>/opt/ibm/InfoSphereStreams/toolkits/spl/spl/utility/Barrier</operatorModelDirectory>
+    <operatorModelDirectory>/opt/ibm/InfoSphereStreams/toolkits/spl/spl/relational/Join</operatorModelDirectory>
     <applicationDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2</applicationDirectory>
     <dataDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2/data</dataDirectory>
     <outputDirectory>/home/streamsadmin/StreamsStudio/workspace/Project1_Part2/output/application.ProjectPart2/Standalone</outputDirectory>
@@ -17,11 +17,36 @@
       <include>"../type/BeJwrMSw2ycnMSwUADOECD1.h"</include>
     </includes>
     <stateVariables/>
-    <runtimeConstants/>
+    <runtimeConstants>
+      <runtimeConstant>
+        <name>lit$0</name>
+        <cppType>SPL::int32</cppType>
+        <splType>int32</splType>
+        <value>30</value>
+      </runtimeConstant>
+      <runtimeConstant>
+        <name>lit$1</name>
+        <cppType>SPL::int32</cppType>
+        <splType>int32</splType>
+        <value>1</value>
+      </runtimeConstant>
+      <runtimeConstant>
+        <name>lit$2</name>
+        <cppType>SPL::int32</cppType>
+        <splType>int32</splType>
+        <value>30</value>
+      </runtimeConstant>
+      <runtimeConstant>
+        <name>lit$3</name>
+        <cppType>SPL::int32</cppType>
+        <splType>int32</splType>
+        <value>1</value>
+      </runtimeConstant>
+    </runtimeConstants>
     <sourceLocation>
       <file>application/ProjectPart2.spl</file>
-      <line>34</line>
-      <column>3</column>
+      <line>45</line>
+      <column>5</column>
     </sourceLocation>
     <productVersion>3.1.0.0</productVersion>
     <checkpointKind>none</checkpointKind>
@@ -39,9 +64,53 @@
       <mutationAllowed>false</mutationAllowed>
       <sourceLocation>
         <file>application/ProjectPart2.spl</file>
-        <line>34</line>
-        <column>67</column>
+        <line>45</line>
+        <column>66</column>
       </sourceLocation>
+      <window>
+        <partitioned>false</partitioned>
+        <evictionPolicy>
+          <type>count</type>
+          <size>
+            <cppType>SPL::int32</cppType>
+            <splType>int32</splType>
+            <hasRuntimeConstant>true</hasRuntimeConstant>
+            <cppExpression>lit$0</cppExpression>
+            <splExpression>30</splExpression>
+            <hasFunctions>false</hasFunctions>
+            <hasSideEffects>false</hasSideEffects>
+            <hasStreamAttributes>false</hasStreamAttributes>
+            <sourceLocation>
+              <file>application/ProjectPart2.spl</file>
+              <line>49</line>
+              <column>36</column>
+            </sourceLocation>
+          </size>
+        </evictionPolicy>
+        <triggerPolicy>
+          <type>count</type>
+          <size>
+            <cppType>SPL::int32</cppType>
+            <splType>int32</splType>
+            <hasRuntimeConstant>true</hasRuntimeConstant>
+            <cppExpression>lit$1</cppExpression>
+            <splExpression>1</splExpression>
+            <hasFunctions>false</hasFunctions>
+            <hasSideEffects>false</hasSideEffects>
+            <hasStreamAttributes>false</hasStreamAttributes>
+            <sourceLocation>
+              <file>&lt;invalid&gt;</file>
+              <line>-1</line>
+              <column>0</column>
+            </sourceLocation>
+          </size>
+        </triggerPolicy>
+        <sourceLocation>
+          <file>application/ProjectPart2.spl</file>
+          <line>49</line>
+          <column>7</column>
+        </sourceLocation>
+      </window>
       <attributes>
         <attribute>
           <name>line</name>
@@ -62,9 +131,53 @@
       <mutationAllowed>false</mutationAllowed>
       <sourceLocation>
         <file>application/ProjectPart2.spl</file>
-        <line>35</line>
-        <column>4</column>
+        <line>46</line>
+        <column>6</column>
       </sourceLocation>
+      <window>
+        <partitioned>false</partitioned>
+        <evictionPolicy>
+          <type>count</type>
+          <size>
+            <cppType>SPL::int32</cppType>
+            <splType>int32</splType>
+            <hasRuntimeConstant>true</hasRuntimeConstant>
+            <cppExpression>lit$2</cppExpression>
+            <splExpression>30</splExpression>
+            <hasFunctions>false</hasFunctions>
+            <hasSideEffects>false</hasSideEffects>
+            <hasStreamAttributes>false</hasStreamAttributes>
+            <sourceLocation>
+              <file>application/ProjectPart2.spl</file>
+              <line>50</line>
+              <column>36</column>
+            </sourceLocation>
+          </size>
+        </evictionPolicy>
+        <triggerPolicy>
+          <type>count</type>
+          <size>
+            <cppType>SPL::int32</cppType>
+            <splType>int32</splType>
+            <hasRuntimeConstant>true</hasRuntimeConstant>
+            <cppExpression>lit$3</cppExpression>
+            <splExpression>1</splExpression>
+            <hasFunctions>false</hasFunctions>
+            <hasSideEffects>false</hasSideEffects>
+            <hasStreamAttributes>false</hasStreamAttributes>
+            <sourceLocation>
+              <file>&lt;invalid&gt;</file>
+              <line>-1</line>
+              <column>0</column>
+            </sourceLocation>
+          </size>
+        </triggerPolicy>
+        <sourceLocation>
+          <file>application/ProjectPart2.spl</file>
+          <line>50</line>
+          <column>7</column>
+        </sourceLocation>
+      </window>
       <attributes>
         <attribute>
           <name>line</name>
@@ -88,8 +201,8 @@
       <mutationAllowed>true</mutationAllowed>
       <sourceLocation>
         <file>application/ProjectPart2.spl</file>
-        <line>34</line>
-        <column>3</column>
+        <line>45</line>
+        <column>5</column>
       </sourceLocation>
       <attributes>
         <attribute>
@@ -99,8 +212,8 @@
           <assignment>
             <sourceLocation>
               <file>application/ProjectPart2.spl</file>
-              <line>38</line>
-              <column>24</column>
+              <line>52</line>
+              <column>26</column>
             </sourceLocation>
             <values>
               <value>
@@ -114,8 +227,8 @@
                 <hasStreamAttributes>true</hasStreamAttributes>
                 <sourceLocation>
                   <file>application/ProjectPart2.spl</file>
-                  <line>38</line>
-                  <column>32</column>
+                  <line>52</line>
+                  <column>34</column>
                 </sourceLocation>
               </value>
             </values>
@@ -128,8 +241,8 @@
           <assignment>
             <sourceLocation>
               <file>application/ProjectPart2.spl</file>
-              <line>38</line>
-              <column>50</column>
+              <line>52</line>
+              <column>52</column>
             </sourceLocation>
             <values>
               <value>
@@ -143,8 +256,8 @@
                 <hasStreamAttributes>true</hasStreamAttributes>
                 <sourceLocation>
                   <file>application/ProjectPart2.spl</file>
-                  <line>38</line>
-                  <column>58</column>
+                  <line>52</line>
+                  <column>60</column>
                 </sourceLocation>
               </value>
             </values>

@@ -28,20 +28,20 @@
           <cppType>SPL::float64</cppType>
           <splType>float64</splType>
           <hasRuntimeConstant>true</hasRuntimeConstant>
-          <cppExpression>lit$1</cppExpression>
+          <cppExpression>lit$2</cppExpression>
           <splExpression>(float64)(0)</splExpression>
           <hasFunctions>false</hasFunctions>
           <hasSideEffects>false</hasSideEffects>
           <hasStreamAttributes>false</hasStreamAttributes>
           <sourceLocation>
             <file>application/ProjectPart2.spl</file>
-            <line>65</line>
+            <line>66</line>
             <column>50</column>
           </sourceLocation>
         </value>
         <sourceLocation>
           <file>application/ProjectPart2.spl</file>
-          <line>65</line>
+          <line>66</line>
           <column>22</column>
         </sourceLocation>
       </stateVariable>
@@ -51,10 +51,16 @@
         <name>lit$0</name>
         <cppType>SPL::int32</cppType>
         <splType>int32</splType>
-        <value>100</value>
+        <value>50</value>
       </runtimeConstant>
       <runtimeConstant>
         <name>lit$1</name>
+        <cppType>SPL::int32</cppType>
+        <splType>int32</splType>
+        <value>1</value>
+      </runtimeConstant>
+      <runtimeConstant>
+        <name>lit$2</name>
         <cppType>SPL::float64</cppType>
         <splType>float64</splType>
         <value>0</value>
@@ -86,8 +92,8 @@
       <mutationAllowed>false</mutationAllowed>
       <sourceLocation>
         <file>application/ProjectPart2.spl</file>
-        <line>60</line>
-        <column>72</column>
+        <line>61</line>
+        <column>14</column>
       </sourceLocation>
       <window>
         <partitioned>false</partitioned>
@@ -98,20 +104,38 @@
             <splType>int32</splType>
             <hasRuntimeConstant>true</hasRuntimeConstant>
             <cppExpression>lit$0</cppExpression>
-            <splExpression>100</splExpression>
+            <splExpression>50</splExpression>
             <hasFunctions>false</hasFunctions>
             <hasSideEffects>false</hasSideEffects>
             <hasStreamAttributes>false</hasStreamAttributes>
             <sourceLocation>
               <file>application/ProjectPart2.spl</file>
-              <line>69</line>
-              <column>41</column>
+              <line>70</line>
+              <column>40</column>
             </sourceLocation>
           </size>
         </evictionPolicy>
+        <triggerPolicy>
+          <type>count</type>
+          <size>
+            <cppType>SPL::int32</cppType>
+            <splType>int32</splType>
+            <hasRuntimeConstant>true</hasRuntimeConstant>
+            <cppExpression>lit$1</cppExpression>
+            <splExpression>1</splExpression>
+            <hasFunctions>false</hasFunctions>
+            <hasSideEffects>false</hasSideEffects>
+            <hasStreamAttributes>false</hasStreamAttributes>
+            <sourceLocation>
+              <file>&lt;invalid&gt;</file>
+              <line>-1</line>
+              <column>0</column>
+            </sourceLocation>
+          </size>
+        </triggerPolicy>
         <sourceLocation>
           <file>application/ProjectPart2.spl</file>
-          <line>69</line>
+          <line>70</line>
           <column>5</column>
         </sourceLocation>
       </window>
@@ -149,7 +173,7 @@
           <assignment>
             <sourceLocation>
               <file>application/ProjectPart2.spl</file>
-              <line>71</line>
+              <line>72</line>
               <column>27</column>
             </sourceLocation>
             <outputFunction>Custom</outputFunction>
@@ -165,8 +189,8 @@
                 <hasStreamAttributes>false</hasStreamAttributes>
                 <sourceLocation>
                   <file>application/ProjectPart2.spl</file>
-                  <line>71</line>
-                  <column>57</column>
+                  <line>73</line>
+                  <column>13</column>
                 </sourceLocation>
                 <expressionTree>
                   <call fcn="application::init" type="1">
@@ -189,8 +213,8 @@
                 <hasStreamAttributes>true</hasStreamAttributes>
                 <sourceLocation>
                   <file>application/ProjectPart2.spl</file>
-                  <line>71</line>
-                  <column>90</column>
+                  <line>73</line>
+                  <column>46</column>
                 </sourceLocation>
                 <expressionTree>
                   <call fcn="application::process" type="1">
@@ -220,8 +244,8 @@
                 <hasStreamAttributes>false</hasStreamAttributes>
                 <sourceLocation>
                   <file>application/ProjectPart2.spl</file>
-                  <line>72</line>
-                  <column>6</column>
+                  <line>74</line>
+                  <column>19</column>
                 </sourceLocation>
                 <expressionTree>
                   <call fcn="application::result" type="0">

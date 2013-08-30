@@ -1,4 +1,4 @@
-// eJydkEFrwzAMhdFfKTtsFzv2sbd2SQdbywIhh52KSUTqJY6DopLl389JtlFYYDB8MBL63ntS3zXiyraxPG63e0NkkSCan4aNEJLHDuUenwc6ZV4fc8cv8VOSJ2_07U1Uf4lpcNr_1mBj0WbfjyXfyaPMZqmpkUQV68Q9kzoXG9KZ1tZbYUGV9L6_0Xgqe47U6BMyb9jweqcGmItS8MGWt_1iHCwC23niuwiy9Bhyr9uChWUXAAWNDSwFa9tWoVx49W8_0Ar_0SYO1A4IKKBsYPVjcCX9bfjZ_0NRIV8nszuH2ZG_182oG2a6jfoEydKNCE
+// eJylUctugzAQ1P5K1EN7wQ964pYWWilNVCTEoafIAou4gI3MRjR_1X8dJIypIeqh8sHd2xzNj910TWNkIVEaLJopWRmmgfnFYBAHBQyfJk1wNdpMZvs5bfItfkzz5WG6q_0iWug91iMjfwQ6Hdli_1j9_0Q5ZscZCo_1QKLyjkKXrKFIaQw4eYROET5DwFwJkZ1pJerRStL0oW6VJdioy3JfKkMHYuu9EIUlqzacskG1TYZGTUqAAbbT0ASmoztiLqSv2QYF1o4wWZq8R2MgKO2dy3WtN5prgz07UOs9KV648CbP_1CfNbwuG8MAUzk3nua6F18hxQfiEbXXD2_1ANc3jCoJG6PYvcPnsP_15rARx2f5BtobL7C
 
 
 
@@ -16,66 +16,148 @@ using namespace SPL::_Operator;
 #define MY_OPERATOR JoinedFileStream$OP
 
 
+#include <SPL/Runtime/Operator/OperatorMetrics.h>
+#include <SPL/Runtime/Utility/LogTraceMessage.h>
+
 MY_OPERATOR_SCOPE::MY_OPERATOR::MY_OPERATOR()
-: MY_BASE_OPERATOR()
+: MY_BASE_OPERATOR(),
+  _windowLHS(*this, 0, ::SPL::CountWindowPolicy(lit$0), ::SPL::CountWindowPolicy(lit$1)),
+  _winLHSHandler (*this),
+  _windowRHS(*this, 1, ::SPL::CountWindowPolicy(lit$2), ::SPL::CountWindowPolicy(lit$3)),
+  _winRHSHandler (*this),
+  _lhsPartitionCount(getContext().getMetrics().getCustomMetricByName("nCurrentPartitionsLHS")),
+  _rhsPartitionCount(getContext().getMetrics().getCustomMetricByName("nCurrentPartitionsRHS"))
 {
+
+    if (lit$1 != 1)
+        SPLTRACEMSG(L_ERROR, SPL_APPLICATION_RUNTIME_INVALID_COUNT_BASED_TRIGGER_SIZE(lit$1), SPL_OPER_DBG);
+    if (lit$3 != 1)
+        SPLTRACEMSG(L_ERROR, SPL_APPLICATION_RUNTIME_INVALID_COUNT_BASED_TRIGGER_SIZE(lit$3), SPL_OPER_DBG);
+    _windowLHS.registerBeforeTupleEvictionHandler(&_winLHSHandler);
+    _windowRHS.registerBeforeTupleEvictionHandler(&_winRHSHandler);
     
+    
+    
+        
+    
+    
+    
+    _emptyCountLHS = (lit$0==0) && (_windowLHS.getEvictionPolicy().getType()==WindowPolicy::Count);
+    _emptyCountRHS = (lit$2==0) && (_windowRHS.getEvictionPolicy().getType()==WindowPolicy::Count);
+    _lhsPartitionCount.setValueNoLock(0);
+    _rhsPartitionCount.setValueNoLock(0);
 }
-
-
 
 MY_OPERATOR_SCOPE::MY_OPERATOR::~MY_OPERATOR()
 {
     // Delete any remaining tuples in the windows
-    
-        for (uint32_t i = 0; i < 2; i++) {
-            DequeType& d = Tuples._tuples[i];
-            for (DequeType::iterator it = d.begin(); it != d.end(); it++)
-                delete *it;
-        }
-    
+    _windowLHS.deleteWindowObjects();
+    _windowRHS.deleteWindowObjects();
 }
 
-void MY_OPERATOR_SCOPE::MY_OPERATOR::process(Tuple const & tuple, uint32_t port)
+
+
+
+
+void MY_OPERATOR_SCOPE::MY_OPERATOR::cleanLHS (Tuple& tuple)
 {
-    const Tuple *inputTuples[2];
-    {
-        AutoMutex am(_mutex);
-        
-        if (Tuples._tuples[port].empty())
-            Tuples._nonEmptyQueues++;
-        Tuples._tuples[port].push_back (tuple.clone());
-        if (Tuples._nonEmptyQueues != 2)
-            return;
+    
+    _lhsPartitionCount.setValueNoLock (_windowLHS.getWindowStorage().size());
+    delete &tuple;
+}
 
+void MY_OPERATOR_SCOPE::MY_OPERATOR::evictLHS (Tuple& tuple)
+{
+    
+    cleanLHS (tuple);
+}
+
+void MY_OPERATOR_SCOPE::MY_OPERATOR::cleanRHS (Tuple& tuple)
+{
+    
+    _rhsPartitionCount.setValueNoLock (_windowRHS.getWindowStorage().size());
+    delete &tuple;
+}
+
+void MY_OPERATOR_SCOPE::MY_OPERATOR::evictRHS (Tuple& tuple)
+{
+    
+    cleanRHS (tuple);
+}
+
+void MY_OPERATOR_SCOPE::MY_OPERATOR::process(Tuple const & tuple, uint32_t port) {
+    AutoPortMutex apm(_mutex, *this);
+    bool match = false;
+    if (port == 0) { // LHS
+        const IPort0Type& iport$0 = static_cast<const IPort0Type&>(tuple);
         
-        for (uint32_t i = 0; i < 2; i++) { // clean up
-            DequeType& d = Tuples._tuples[i];
-            inputTuples[i] = d.front();
+        
+        if (!_emptyCountRHS) {
+            AutoWindowDataAcquirer<IPort1Type*,PartitionByRHSType> awda(_windowRHS);
             
-            d.pop_front();
-            if (d.empty())
-                Tuples._nonEmptyQueues--;
+                const WindowRHSType::StorageType& map = awda.getWindowStorage();
+                WindowRHSType::StorageType::const_iterator it;
+                for (it = map.begin(); it != map.end(); it++) {
+                    const WindowRHSType::DataType& data = it->second;
+                    WindowRHSType::DataType::const_iterator it2;
+                    for (it2 = data.begin(); it2 != data.end(); it2++) {
+                        const IPort1Type& iport$1 =
+                            static_cast<const IPort1Type&>(**it2);
+                        if (true) {
+                            match = true;
+                            
+                            OPort0Type otuple (iport$0.get_line(), iport$1.get_line());
+                            submit (otuple, 0);
+                        }
+                    }
+                }
+            
+            _rhsPartitionCount.setValueNoLock (_windowRHS.getWindowStorage().size());
         }
+        if (!_emptyCountLHS) {
+            IPort0Type *newTuple = new IPort0Type(tuple);
+            
+            
+            _windowLHS.insert (newTuple);
+            _lhsPartitionCount.setValueNoLock (_windowLHS.getWindowStorage().size());
+        } else {
+                        
+        }
+    } else { // RHS
+        const IPort1Type& iport$1 = static_cast<const IPort1Type&>(tuple);
         
         
+        if (!_emptyCountLHS) {
+            AutoWindowDataAcquirer<IPort0Type*,PartitionByLHSType> awda(_windowLHS);
+            
+                const WindowLHSType::StorageType& map = awda.getWindowStorage();
+                WindowLHSType::StorageType::const_iterator it;
+                for (it = map.begin(); it != map.end(); it++) {
+                    const WindowLHSType::DataType& data = it->second;
+                    WindowLHSType::DataType::const_iterator it2;
+                    for (it2 = data.begin(); it2 != data.end(); it2++) {
+                        const IPort0Type& iport$0 = static_cast<const IPort0Type&>(**it2);
+                        if (true) {
+                            match = true;
+                            
+                            OPort0Type otuple (iport$0.get_line(), iport$1.get_line());
+                            submit (otuple, 0);
+                        }
+                    }
+                }
+            
+        }
+        if (!_emptyCountRHS) {
+            IPort1Type *newTuple = new IPort1Type(tuple);
+            
+            
+            _windowRHS.insert (newTuple);
+        } else {
+                 
+        }
     }
-
-    // Now we can submit the output tuple and delete the input tuples
-    
-        const IPort0Type& iport$0 =
-            static_cast<const IPort0Type&>(*inputTuples[0]);
-    
-        const IPort1Type& iport$1 =
-            static_cast<const IPort1Type&>(*inputTuples[1]);
-    
-
-    OPort0Type otuple (iport$0.get_line(), iport$1.get_line());
-    submit (otuple, 0);
-
-    // Now delete the saved input tuples
-    for (uint32_t i = 0; i < 2; i++)
-        delete inputTuples[i];
+    if (match)
+        submit(Punctuation::WindowMarker, 0);
 }
 
 static SPL::Operator * initer() { return new MY_OPERATOR_SCOPE::MY_OPERATOR(); }
@@ -94,6 +176,10 @@ MY_BASE_OPERATOR::MY_BASE_OPERATOR()
  : Operator() {
     PE & pe = PE::instance();
     uint32_t index = getIndex();
+    initRTC(*this, lit$0, "lit$0");
+    initRTC(*this, lit$1, "lit$1");
+    initRTC(*this, lit$2, "lit$2");
+    initRTC(*this, lit$3, "lit$3");
     (void) getParameters(); // ensure thread safety by initializing here
     $oportBitset = OPortBitsetType(std::string("011"));
 }

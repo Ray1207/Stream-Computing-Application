@@ -1,4 +1,4 @@
-// eJyNUt9PwjAQzv0nxvAAiVk3UKJ72wgvwBAziL6ROsoodO3S3kK2v94NcKCiM5c_0tPnuvh89kwpLM0GRK0mF63pxrFlMkYF9qAe4tSyyzmRUIQhNU8GjA5pwydHa3P4OSLWKmDF_1YjQzmajHYJ4y4rPRXgdvL0Ug_1WCeP43ni0cTLuxRYYppMdyZnOep7_1l7HYv4eud0sH0ugl4QhsV4Mt4NvQHve6_0LCuyAwdJeqza6CnnCBdUc8zBSmkE4m7juWiiK_1XuALgiOLfv4yiX2unB4cb7hgGxUwohBzWhi6CrhkoTHS4jZiiuyV3pnUhoxMtNqyyJ0ljOqsUtWFClIJavMnfLwVOmasskTcNBVnx2pTCI4Fzqdk_1SqoDJeG4VP2RWdukr3n_1AhKbkduBblmWGQGVQJ9I7z35USjMqS1nUv9qCSzLHd8DWdhhmnhWsac3dzStiKGS7PqbQ7na_0f_0oPguK2NMstUPwCd8xuc
+// eJyNUsFugkAQzfxJ03jQpGFBW9NyE_0NFxdqgaW9miyuuLrtkd4iBry_0gVVu1NGQPzLyZee_1NmERYmgmKXEkqXLcXRZpFFBnY1fcE95ZFVqkMSwShSSJ4WKEJlxyt9f1tQKJVyIz5E6OZScWxDWYJIx4b7rT_18Zb70vNn2ctoNn82wdwe5iaf5IOtyXiWeD1vpyMRXa_0c9Devud_1xgyAfjUfbQa_1Pu733eQl2wGAhr3EUugx4zAXVHLMgVJpBMB277kooit1HgA4Ijg17H_0USO22oIs5FpP2rEshaxYwY1IzGhi5jLkmw_1wkwXXJFdkpvTUJDRqZabViIzmJKNbbJkiIFqWS5Bad4PFH6SKJOJXDQZZ0dqlQiOGc8nYOYInsrWY6D0qWjK_1CtqEypq0z_0symIC1oOXPP9NKGfGlRxYXrV_11Mpwagsxrru2dGUhDk2a_1bYqulxuM66Ng93B_1OtiOHi5Eqz1fq574sB_09OupVm4_0gVNQyfD
 
 
 
@@ -16,39 +16,22 @@ using namespace SPL::_Operator;
 #define MY_OPERATOR AggregateSimilarity$OP
 
 
-#include <SPL/Toolkit/TumblingAggregate.h>
-#include <SPL/Runtime/Window/TumblingWindowSummarizer.h>
+#include <SPL/Toolkit/Aggregate.h>
 
 #include <SPL/Runtime/Operator/OperatorMetrics.h>
 
-#define MY$OP MY_OPERATOR_SCOPE::MY_OPERATOR
-struct MY_OPERATOR::Tumbling$AggregateSimilarity :
-	public  SPL::TumblingWindowSummarizer<MY$OP::IPort0Type,MY$OP::PartitionByType>{
-    MY$OP& _oper;
-    uint64_t _count;
-    Tumbling$AggregateSimilarity (SPL::Operator& oper)
-    : _oper(static_cast<MY$OP&>(oper)) {
-	_count = 0;
-	::application::init(_oper.state$AggregatedSimilarityScore);
-    }
-    void onTupleInsertionEvent(MY$OP::IPort0Type const& tuple) {
-	_count++;
-	MY$OP::IPort0Type const & iport$0 = static_cast<MY$OP::IPort0Type const>(tuple);
-	::application::process(_oper.state$AggregatedSimilarityScore, iport$0.get_similarity());
-    }
-};
 
 
 MY_OPERATOR_SCOPE::MY_OPERATOR::MY_OPERATOR()
-  : MY_BASE_OPERATOR(), _window(*this, 0, ::SPL::CountWindowPolicy(lit$0)),
+  : MY_BASE_OPERATOR(), _window(*this, 0, ::SPL::CountWindowPolicy(lit$0), ::SPL::CountWindowPolicy(lit$1)),
   _partitionCount(getContext().getMetrics().getCustomMetricByName("nCurrentPartitions"))
 {
 
-    _window.registerBeforeWindowFlushHandler(this);
+    _window.registerOnWindowTriggerHandler(this);
     
-        _window.registerWindowSummarizer<MY_OPERATOR::Tumbling$AggregateSimilarity>();
+        _window.registerOnWindowInitialFullHandler(this);
     
-    
+    _window.registerBeforeTupleEvictionHandler(this);
 
 
     _partitionCount.setValueNoLock(0);
@@ -66,7 +49,7 @@ void MY_OPERATOR_SCOPE::MY_OPERATOR::process(Tuple const & tuple, uint32_t port)
     IPort0Type const & iport$0 = static_cast<IPort0Type const&>(tuple);   
 
     
-        _window.insert(iport$0);
+        _window.insert(new IPort0Type(iport$0));
     
 
     _partitionCount.setValueNoLock (_window.getWindowStorage().size());
@@ -74,20 +57,20 @@ void MY_OPERATOR_SCOPE::MY_OPERATOR::process(Tuple const & tuple, uint32_t port)
 
 
 
-void MY_OPERATOR_SCOPE::MY_OPERATOR::beforeWindowFlushEvent(
+void MY_OPERATOR_SCOPE::MY_OPERATOR::onWindowTriggerEvent(
         WindowEventType::WindowType & window, 
         WindowEventType::PartitionType const & partition) 
 {
     
-        WindowType& twindow = static_cast<WindowType&>(window);
-        MY_OPERATOR::Tumbling$AggregateSimilarity& summarizer =
-            *static_cast<MY_OPERATOR::Tumbling$AggregateSimilarity*>(twindow.getSummarizer(partition));
+
+
+    if (_windowFull.find(partition) == _windowFull.end())
+        return;
+
+
     
-
-
-
-    
-        if (summarizer._count == 0) {
+        WindowType::DataType & data = window.getWindowData(partition);
+        if (data.size() == 0) {
     
             submit(Punctuation::WindowMarker, 0);
             return;
@@ -96,9 +79,23 @@ void MY_OPERATOR_SCOPE::MY_OPERATOR::beforeWindowFlushEvent(
 
 
     
+                ::application::init(state$AggregatedSimilarityScore);
+                
+        
+    
+    
+        WindowType::DataType::const_iterator it;
+        for (it = data.begin(); it != data.end(); it++) {
+            IPort0Type const & iport$0 = **it;
+            
+                    ::application::process(state$AggregatedSimilarityScore, iport$0.get_similarity());
+                    
+          }
     
 
         // Populate the tuple
+        
+            IPort0Type const & iport$0 = **data.rbegin();
         
         
         SPL::BeJwrMXQzMnBMTy9KTU8sSU0JzszNzEksyiypBABwrglg otuple(::application::result(state$AggregatedSimilarityScore));
@@ -111,6 +108,22 @@ void MY_OPERATOR_SCOPE::MY_OPERATOR::beforeWindowFlushEvent(
 
 
 
+
+    
+    void MY_OPERATOR_SCOPE::MY_OPERATOR::onWindowInitialFullEvent(WindowEventType::WindowType & window, 
+                                               WindowEventType::PartitionType const & partition) 
+    {
+        _windowFull.insert (partition);
+    }
+    
+
+void MY_OPERATOR_SCOPE::MY_OPERATOR::beforeTupleEvictionEvent(WindowEventType::WindowType & window, 
+                                           WindowEventType::TupleType & tuple, 
+                                           WindowEventType::PartitionType const & partition)
+{
+    delete tuple;
+    _partitionCount.setValueNoLock (_window.getWindowStorage().size());
+}
 
 
 static SPL::Operator * initer() { return new MY_OPERATOR_SCOPE::MY_OPERATOR(); }
@@ -131,7 +144,8 @@ MY_BASE_OPERATOR::MY_BASE_OPERATOR()
     uint32_t index = getIndex();
     initRTC(*this, lit$0, "lit$0");
     initRTC(*this, lit$1, "lit$1");
-    state$AggregatedSimilarityScore = lit$1;
+    initRTC(*this, lit$2, "lit$2");
+    state$AggregatedSimilarityScore = lit$2;
     (void) getParameters(); // ensure thread safety by initializing here
     $oportBitset = OPortBitsetType(std::string("01"));
 }
