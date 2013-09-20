@@ -1,0 +1,122 @@
+package storm.starter.bolt;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.StringTokenizer;
+
+import twitter4j.Status;
+import backtype.storm.topology.BasicOutputCollector;
+import backtype.storm.topology.OutputFieldsDeclarer;
+import backtype.storm.topology.base.BaseBasicBolt;
+import backtype.storm.tuple.Fields;
+import backtype.storm.tuple.Tuple;
+import backtype.storm.tuple.Values;
+
+public class TokenizeTweetsBolt extends BaseBasicBolt {
+	
+
+	
+	Map<String, Integer> window_Tweet_word_counts = new HashMap<String, Integer>();
+	Map<String, Integer> window_Tweet_word__tweet_counts = new HashMap<String, Integer>();
+	int TOP_K = 1000;
+	
+	//Read stop words
+
+
+	
+	@Override
+	public Map<String, Object> getComponentConfiguration() {
+		return null;
+	}
+
+	
+	@Override
+	public void execute(Tuple tuple, BasicOutputCollector collector) {
+		List<Status> window_Tweet_List = (ArrayList<Status>) tuple.getValue(0);
+
+		for (Status tweet : window_Tweet_List) {
+			String text = tweet.getText();
+			text = text.replaceAll("@[a-zA-Z0-9]+", "");			
+			text = text.replaceAll("[^a-zA-Z0-9\\s]", "");
+
+			text = text.toLowerCase();
+			text = text.replaceAll("RT|the|of|a|an|ohh|lol", "");
+			
+			StringTokenizer words = new StringTokenizer(text);
+
+			//statistics of one tweet
+			Map<String, Integer> tweet_words = new HashMap<String, Integer>();
+			
+			while (words.hasMoreTokens()) {
+				String word = words.nextToken();
+				Integer word_in_line_count = tweet_words.get(word);
+				if(word_in_line_count==null)
+				{
+					word_in_line_count=0;
+				}
+				
+				word_in_line_count++;
+				
+				tweet_words.put(word, word_in_line_count);
+			}
+			
+			for (Map.Entry<String,Integer> entry : tweet_words.entrySet()) {
+			    String word = entry.getKey();
+			    Integer word_count = entry.getValue();
+			    
+			    Integer word_Statistics = window_Tweet_word_counts.get(word);
+			    Integer original_word_tweet_counts = window_Tweet_word__tweet_counts.get(word);
+				
+			    if(word_Statistics != null)
+				{
+			    	window_Tweet_word_counts.put(word,word_Statistics+word_count);
+			    	window_Tweet_word__tweet_counts.put(word,original_word_tweet_counts+1);
+				}
+			    else if(window_Tweet_word_counts.size()<TOP_K)
+			    {
+			    	window_Tweet_word_counts.put(word,word_count);
+					window_Tweet_word__tweet_counts.put(word,1);
+			    }
+			    else
+			    {
+			    	//find the item with least count
+			    	Entry<String, Integer> least_count_word = Get_Min_Word_Entry(window_Tweet_word_counts);
+			    	String least_count_word_key = least_count_word.getKey();
+			    	Integer least_count_word_value = least_count_word.getValue();
+			    	
+			    	window_Tweet_word_counts.remove(least_count_word_key);
+			    	window_Tweet_word_counts.put(word, least_count_word_value+1);
+			    	
+			    	window_Tweet_word__tweet_counts.remove(least_count_word_key);
+			    	window_Tweet_word__tweet_counts.put(word,1);
+			    }			    
+			}
+		}
+		
+		Map<String, Integer> copy_window_Tweet_word_counts = new HashMap<String, Integer>(window_Tweet_word_counts);
+		Map<String, Integer> copy_window_Tweet_word__tweet_counts = new HashMap<String, Integer>(window_Tweet_word__tweet_counts);
+		
+		collector.emit(new Values(copy_window_Tweet_word_counts,copy_window_Tweet_word__tweet_counts));
+	}
+
+	@Override
+	public void declareOutputFields(OutputFieldsDeclarer declarer) {
+		declarer.declare(new Fields("window_Tweet_word_counts","window_Tweet_word__tweet_counts"));
+	}
+	
+	public Entry<String,Integer> Get_Min_Word_Entry(Map<String, Integer> map)
+	{
+		Entry<String, Integer> min = null;
+		for (Entry<String, Integer> entry : map.entrySet()) {
+		    if (min == null || min.getValue() > entry.getValue()) {
+		        min = entry;
+		    }
+		}		
+		return min;
+	}
+}
